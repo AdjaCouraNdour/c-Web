@@ -1,0 +1,15 @@
+﻿@model GestionBoutiqueC.Entities.User
+
+<h2>Détails du User</h2>
+
+<div>
+    <p><strong>Id :</strong> @Model.Id</p>
+    <p><strong>Email :</strong> @Model.Email</p>
+    <p><strong>Login :</strong> @Model.Login</p>
+    <p><strong>Password :</strong> @Model.Password</p>
+    <p><strong>Client :</strong> @Model.Client.Surnom</p>
+    <p><strong>Date de création :</strong> @Model.CreateAt</p>
+    <p><strong>Date de mise à jour :</strong> @Model.UpdateAt</p>
+</div>
+
+<a asp-action="DetailsClient" class="btn btn-secondary">Retour à la liste</a>

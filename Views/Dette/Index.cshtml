@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GestionBoutiqueC.Entities.Dette>
+
+@{
+    ViewData["Title"] = "Liste des Dettes";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="flex">
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead>
+            <tr class="bg-burgundy">
+                <th class="py-2 px-4 border-b text-white text-left">Montant</th>
+                <th class="py-2 px-4 border-b text-white text-left">Date</th>
+                <th class="py-2 px-4 border-b text-white text-left">Client</th>
+                <th class="py-2 px-4 border-b text-white">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dette in Model)
+            {
+                <tr class="bg-nude hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">@dette.Montant</td>
+                    <td class="py-2 px-4 border-b">@dette.Date.ToString("dd/MM/yyyy")</td>
+                    <td class="py-2 px-4 border-b">@dette.Client.Surnom</td>
+                    <td class="py-2 px-4 border-b text-center">
+                        <!-- Actions -->
+                        <a href="@Url.Action("Details", "Dette", new { id = dette.Id })" class="text-red-500 hover:text-gray-700" title="Détails">
+                            Détails
+                        </a>
+                        <a href="@Url.Action("Delete", "Dette", new { id = dette.Id })" class="text-gray-500 hover:text-red-600" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette dette ?');">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            }
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4" class="py-2 px-4 text-center">Aucune dette trouvée.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

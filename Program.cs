@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
     
 builder.Services.AddScoped<IClientModel, ClientModel>();
+builder.Services.AddScoped<IUserModel, UserModel>();
+builder.Services.AddScoped<IDetteModel, DetteModel>();
 
 var app = builder.Build();
 

@@ -6,67 +6,67 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionBoutiqueC.Models
 {
-    public class DetteModel : IDetteModel
+    public class UserModel : IUserModel
     {
         private readonly ApplicationDbContext _context;
 
         // Injecter le contexte de la base de données dans le service
-        public DetteModel(ApplicationDbContext context)
+        public UserModel(ApplicationDbContext context)
         {
             _context = context;
         }
         
-        public IEnumerable<Dette> GetDettes()
+        public IEnumerable<User> GetUsers()
         {
-            return _context.Dettes.ToList();
+            return _context.Users.ToList();
         }
         // Implémentation de la méthode Delete
         public async Task Delete(int id)
         {
-            var dette = await _context.Dettes.FindAsync(id);
-            if (dette != null)
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
             {
-                _context.Dettes.Remove(dette);
+                _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
         }
 
         // Implémentation de la méthode FindAll
-        public async Task<List<Dette>> FindAll()
+        public async Task<List<User>> FindAll()
         {
-            return await _context.Dettes.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         // Implémentation de la méthode FindById
-        public async Task<Dette> FindById(int id)
+        public async Task<User> FindById(int id)
         {
-            return await _context.Dettes.FindAsync(id);
+            return await _context.Users.FindAsync(id);
         }
 
         // Implémentation de la méthode Save
-        public async Task Save(Dette data)
+        public async Task Save(User data)
         {
-            await _context.Dettes.AddAsync(data);
+            await _context.Users.AddAsync(data);
             await _context.SaveChangesAsync();
         }
 
         // Implémentation de la méthode Update
-        public async Task Update(Dette data)
+        public async Task Update(User data)
         {
-            var existingDette = await _context.Dettes.FindAsync(data.Id);
-            if (existingDette != null)
+            var existingUser = await _context.Users.FindAsync(data.Id);
+            if (existingUser != null)
             {
-                _context.Entry(existingDette).CurrentValues.SetValues(data);
+                _context.Entry(existingUser).CurrentValues.SetValues(data);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public Task<Dette> FindByLogin(string telephone)
+        public Task<User> FindByLogin(string telephone)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Dette> FindByEmail(string telephone)
+        public Task<User> FindByEmail(string telephone)
         {
             throw new NotImplementedException();
         }
