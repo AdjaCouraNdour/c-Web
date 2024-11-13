@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestionBoutiqueC.Models
 {
-    public class DetailModel : IDetailsModel
+    public class DetailsModel : IDetailsModel
     {
         private readonly ApplicationDbContext _context;
 
         // Injecter le contexte de la base de données dans le service
-        public DetailModel(ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -43,7 +43,7 @@ namespace GestionBoutiqueC.Models
         {
             return await _context.Details.FindAsync(id);
         }
-        
+
         // Implémentation de la méthode Save
         public async Task Save(Detail data)
         {
