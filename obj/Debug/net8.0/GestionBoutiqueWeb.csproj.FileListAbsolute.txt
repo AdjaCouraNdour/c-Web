@@ -165,3 +165,7 @@ C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\obj\Debug\net8.0\GestionB.2
 C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\obj\Debug\net8.0\GestionBoutiqueWeb.dll
 C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\obj\Debug\net8.0\refint\GestionBoutiqueWeb.dll
 C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\obj\Debug\net8.0\GestionBoutiqueWeb.pdb
+C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\bin\Debug\net8.0\GestionBoutiqueWeb.deps.json
+C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\bin\Debug\net8.0\GestionBoutiqueWeb.runtimeconfig.json
+C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\obj\Debug\net8.0\GestionBoutiqueWeb.genruntimeconfig.cache
+C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb\obj\Debug\net8.0\ref\GestionBoutiqueWeb.dll

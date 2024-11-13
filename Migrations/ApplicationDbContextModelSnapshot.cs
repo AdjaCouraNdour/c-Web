@@ -49,13 +49,14 @@ namespace GestionBoutiqueWeb.Migrations
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Clients");
 
@@ -64,31 +65,31 @@ namespace GestionBoutiqueWeb.Migrations
                         {
                             Id = 1,
                             Address = "123 Rue de Paris",
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 523, DateTimeKind.Local).AddTicks(2294),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 101, DateTimeKind.Local).AddTicks(7389),
                             Surnom = "kiki",
                             Telephone = "774799479",
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 523, DateTimeKind.Local).AddTicks(3872),
-                            UserId = 0
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 101, DateTimeKind.Local).AddTicks(9085),
+                            UserId = 1
                         },
                         new
                         {
                             Id = 2,
                             Address = "456 Rue de Lyon",
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 523, DateTimeKind.Local).AddTicks(6323),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 103, DateTimeKind.Local).AddTicks(303),
                             Surnom = "coura",
                             Telephone = "77479944",
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 523, DateTimeKind.Local).AddTicks(6324),
-                            UserId = 0
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 103, DateTimeKind.Local).AddTicks(304),
+                            UserId = 2
                         },
                         new
                         {
                             Id = 3,
                             Address = "789 Rue de Marseille",
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 523, DateTimeKind.Local).AddTicks(6330),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 103, DateTimeKind.Local).AddTicks(313),
                             Surnom = "loulou",
                             Telephone = "774799473",
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 523, DateTimeKind.Local).AddTicks(6331),
-                            UserId = 0
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 103, DateTimeKind.Local).AddTicks(314),
+                            UserId = 3
                         });
                 });
 
@@ -132,34 +133,34 @@ namespace GestionBoutiqueWeb.Migrations
                         {
                             Id = 1,
                             ClientId = 1,
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 526, DateTimeKind.Local).AddTicks(8419),
-                            Date = new DateTime(2024, 10, 13, 16, 32, 11, 526, DateTimeKind.Local).AddTicks(8421),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(4793),
+                            Date = new DateTime(2024, 10, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(5674),
                             Montant = 500.0,
                             MontantRestant = 300.0,
                             MontantVerse = 200.0,
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 526, DateTimeKind.Local).AddTicks(8420)
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(4798)
                         },
                         new
                         {
                             Id = 2,
                             ClientId = 2,
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 527, DateTimeKind.Local).AddTicks(1164),
-                            Date = new DateTime(2024, 9, 13, 16, 32, 11, 527, DateTimeKind.Local).AddTicks(1166),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(8388),
+                            Date = new DateTime(2024, 9, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(8391),
                             Montant = 1200.0,
                             MontantRestant = 700.0,
                             MontantVerse = 500.0,
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 527, DateTimeKind.Local).AddTicks(1165)
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(8390)
                         },
                         new
                         {
                             Id = 3,
                             ClientId = 1,
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 527, DateTimeKind.Local).AddTicks(1191),
-                            Date = new DateTime(2024, 8, 13, 16, 32, 11, 527, DateTimeKind.Local).AddTicks(1192),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(8415),
+                            Date = new DateTime(2024, 8, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(8417),
                             Montant = 750.0,
                             MontantRestant = 0.0,
                             MontantVerse = 750.0,
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 527, DateTimeKind.Local).AddTicks(1192)
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 107, DateTimeKind.Local).AddTicks(8416)
                         });
                 });
 
@@ -174,7 +175,7 @@ namespace GestionBoutiqueWeb.Migrations
                     b.Property<bool>("Actif")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ClientId")
+                    b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
@@ -182,8 +183,8 @@ namespace GestionBoutiqueWeb.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -207,33 +208,33 @@ namespace GestionBoutiqueWeb.Migrations
                             Id = 1,
                             Actif = true,
                             ClientId = 1,
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 525, DateTimeKind.Local).AddTicks(9316),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 106, DateTimeKind.Local).AddTicks(2448),
                             Email = "admin@example.com",
                             Login = "admin",
                             Password = "admin",
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 525, DateTimeKind.Local).AddTicks(9320)
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 106, DateTimeKind.Local).AddTicks(2462)
                         },
                         new
                         {
                             Id = 2,
                             Actif = true,
                             ClientId = 2,
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 525, DateTimeKind.Local).AddTicks(9789),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 106, DateTimeKind.Local).AddTicks(3265),
                             Email = "user1@example.com",
                             Login = "user1",
                             Password = "user1",
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 525, DateTimeKind.Local).AddTicks(9790)
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 106, DateTimeKind.Local).AddTicks(3266)
                         },
                         new
                         {
                             Id = 3,
                             Actif = false,
                             ClientId = 3,
-                            CreateAt = new DateTime(2024, 11, 13, 16, 32, 11, 525, DateTimeKind.Local).AddTicks(9797),
+                            CreateAt = new DateTime(2024, 11, 13, 19, 2, 27, 106, DateTimeKind.Local).AddTicks(3276),
                             Email = "Boutiquier@example.com",
                             Login = "Boutiquier",
                             Password = "Boutiquier",
-                            UpdateAt = new DateTime(2024, 11, 13, 16, 32, 11, 525, DateTimeKind.Local).AddTicks(9798)
+                            UpdateAt = new DateTime(2024, 11, 13, 19, 2, 27, 106, DateTimeKind.Local).AddTicks(3277)
                         });
                 });
 
@@ -242,8 +243,7 @@ namespace GestionBoutiqueWeb.Migrations
                     b.HasOne("GestionBoutiqueC.Entities.User", "User")
                         .WithOne("Client")
                         .HasForeignKey("GestionBoutiqueC.Entities.Client", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });

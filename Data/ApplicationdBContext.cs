@@ -27,17 +27,20 @@ namespace GestionBoutiqueC.Data
         {
             // Relation 1:1 entre Client et User
 
+
+
             // modelBuilder.Entity<Client>()
             //     .HasOne(c => c.User)
             //     .WithOne(u => u.Client)
-            //     .HasForeignKey<User>(u => u.Client) // Assurez-vous que ClientId existe dans User
+            //     .HasForeignKey<User>(u => u.ClientId) // Assurez-vous que ClientId existe dans User
             //     .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Client)
                 .WithOne(c => c.User)
                 .HasForeignKey<Client>(c => c.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
 
             // Relation 1:N entre Client et Dette
             modelBuilder.Entity<Dette>()

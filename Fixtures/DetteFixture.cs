@@ -21,7 +21,7 @@ namespace GestionBoutiqueC.Fixtures
                 },
                 new Dette
                 {
-                    Id = 3,
+                    Id = 2,
                     Date = DateTime.Now.AddMonths(-2),
                     Montant = 1200.0,
                     MontantVerse = 500.0,

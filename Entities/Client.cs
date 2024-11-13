@@ -21,10 +21,9 @@ namespace GestionBoutiqueC.Entities
         [Required(ErrorMessage = "Le telephone est obligatoire")]
         [RegularExpression(@"^(77|78|76)[0-9]{7}$",ErrorMessage = "Le telephone doit etrre sous forme 77xxxxxxx ou 78xxxxxxx ou 76xxxxxxx")]
         public string Telephone { get; set; }
-        
+        public int? UserId { get; set; }
         public string Address { get; set; }
-        public User User { get; set; }
-        public int UserId { get; set; }
+        public User? User { get; set; }
 
         public virtual ICollection<Dette> Dettes { get;} = new List<Dette>();
 

@@ -14,13 +14,13 @@ namespace GestionBoutiqueC.Entities
         }
 
         public int Id { get; set; }
-        
+
         [Required(ErrorMessage = "Le login est obligatoire")]
         [StringLength(20, ErrorMessage = "Le  login doit avoir au maximum 20 caractères")]
         public string Login { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "L'email est obligatoire")]
-        [StringLength(20, ErrorMessage = "L'email doit avoir au maximum 20 caractères")]
+        [StringLength(50, ErrorMessage = "L'email doit avoir au maximum 20 caractères")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Le password est obligatoire")]
@@ -29,10 +29,10 @@ namespace GestionBoutiqueC.Entities
         public bool Actif { get; set; } = true;
 
         // Propriété de navigation vers Client (relation 1-1)
+        
+
+        public int? ClientId { get; set; }
         public Client? Client { get; set; }
-
-        public int ClientId { get; set; }
-
        
 
     }
