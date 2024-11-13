@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using GestionBoutiqueC;
+using GestionBoutiqueC.Enums;
 
 namespace GestionBoutiqueC.Entities
 {
@@ -29,7 +30,7 @@ namespace GestionBoutiqueC.Entities
         public bool Actif { get; set; } = true;
 
         // Propriété de navigation vers Client (relation 1-1)
-        
+        public UserRole UserRole { get; set; }
 
         public int? ClientId { get; set; }
         public Client? Client { get; set; }

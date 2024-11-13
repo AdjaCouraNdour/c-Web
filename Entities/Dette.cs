@@ -1,20 +1,11 @@
 using System;
 using System.Collections.Generic;
+using GestionBoutiqueC.Enums;
 
 namespace GestionBoutiqueC.Entities
 {
     public class Dette : AbstractEntity
     {
-
-        // private DateTime date;
-        // private double montant;
-        // private double montantVerse;
-        // private double montantRestant;
-        // // private TypeDette typeDette;
-        // // private EtatDette etatDette;
-        // private bool archiver;
-        // private Client client;
-        // private static int nbr;
 
         // Liste de détails et paiements
         // public virtual ICollection<Details> ListeDetails { get; set; } = new List<Details>();
@@ -34,31 +25,11 @@ namespace GestionBoutiqueC.Entities
             UpdateAt = DateTime.Now;
         }
         
-        // public TypeDette TypeDette { get => typeDette; set => typeDette = value; }
-        // public EtatDette EtatDette { get => etatDette; set => etatDette = value; }
-      
-
-        // public void AddDetails(Details details)
-        // {
-        //     details.Dette = this;
-        //     ListeDetails.Add(details);
-        // }
-
-        // public void AddPaiement(Paiement paiement)
-        // {
-        //     this.montantRestant = this.montantRestant - this.montantVerse;
-        //     if (this.montantVerse == this.montant)
-        //     {
-        //         this.montantRestant = 0;
-        //         this.typeDette = TypeDette.Solde;
-        //     }
-        //     else
-        //     {
-        //         this.typeDette = TypeDette.nonSolde;
-        //     }
-        //     ListePaiements.Add(paiement);
-        // }
-
+        public TypeDette TypeDette { get; set ; }
+        public EtatDette EtatDette { get; set ; }
+    
+        public virtual ICollection<Detail> Details { get;} = new List<Detail>();
+        public virtual ICollection<Paiement> Paiements { get;} = new List<Paiement>();
 
     }
 }

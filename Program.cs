@@ -14,6 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IClientModel, ClientModel>();
 builder.Services.AddScoped<IUserModel, UserModel>();
 builder.Services.AddScoped<IDetteModel, DetteModel>();
+builder.Services.AddScoped<IDetailsModel, DetailsModel>();
+builder.Services.AddScoped<IPaiementModel, PaiementModel>();
+builder.Services.AddScoped<IArticleModel, ArticleModel>();
 
 var app = builder.Build();
 

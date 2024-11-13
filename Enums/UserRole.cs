@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GestionBoutiqueC.Enums
 {
-    public enum EtatDette
+    public enum UserRole
     {
-        EnCours,Anuler
+        Boutiquier,Client,Admin
     }
 }

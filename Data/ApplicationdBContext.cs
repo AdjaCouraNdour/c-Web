@@ -11,6 +11,12 @@ namespace GestionBoutiqueC.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Dette> Dettes { get; set; }
 
+        public DbSet<Detail> Details { get; set; }
+
+        public DbSet<Article> Articles { get; set; }
+
+        public DbSet<Paiement> Paiements { get; set; }
+
         // Autres DbSet pour d'autres entités
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -25,16 +31,7 @@ namespace GestionBoutiqueC.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Relation 1:1 entre Client et User
-
-
-
-            // modelBuilder.Entity<Client>()
-            //     .HasOne(c => c.User)
-            //     .WithOne(u => u.Client)
-            //     .HasForeignKey<User>(u => u.ClientId) // Assurez-vous que ClientId existe dans User
-            //     .OnDelete(DeleteBehavior.Cascade);
-
+        // Relation 1:1 entre Client et User
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Client)
                 .WithOne(c => c.User)
@@ -46,13 +43,35 @@ namespace GestionBoutiqueC.Data
             modelBuilder.Entity<Dette>()
                 .HasOne(d => d.Client)
                 .WithMany(c => c.Dettes)
-                .HasForeignKey(d => d.ClientId) // Assurez-vous que ClientId existe dans Dette
+                .HasForeignKey(d => d.ClientId) 
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relation N:1 entre Client et Dette
+            modelBuilder.Entity<Dette>()
+                .HasMany(d => d.Details)
+                .WithOne(de => de.Dette)
+                .HasForeignKey(de => de.DetteId) 
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<Dette>()
+                .HasMany(d => d.Paiements)
+                .WithOne(p => p.Dette)
+                .HasForeignKey(p => p.DetteId) 
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Article>()
+                .HasMany(a => a.Details)
+                .WithOne(de => de.Article)
+                .HasForeignKey(de => de.ArticleId) 
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Ajout des fixtures
             modelBuilder.Entity<Client>().HasData(ClientFixture.GetClients());
             modelBuilder.Entity<User>().HasData(UserFixture.GetUsers().ToArray());
             modelBuilder.Entity<Dette>().HasData(DetteFixture.GetDettes().ToArray());
+            modelBuilder.Entity<Detail>().HasData(DetailFixture.GetDetails().ToArray());
+            modelBuilder.Entity<Article>().HasData(ArticleFixture.GetArticles().ToArray());
+            modelBuilder.Entity<Paiement>().HasData(PaiementFixture.GetPaiements().ToArray());
 
             base.OnModelCreating(modelBuilder);
         }
