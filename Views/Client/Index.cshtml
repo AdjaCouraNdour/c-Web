@@ -1,0 +1,47 @@
+﻿@model IEnumerable<GestionBoutiqueC.Entities.Client>
+
+
+@{
+    ViewData["Title"] = "Liste des Clients";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="flex">
+
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead>
+            <tr class="bg-burgundy">
+                <th class="py-2 px-4 border-b text-white text-left">Nom</th>
+                <th class="py-2 px-4 border-b text-white text-left">Téléphone</th>
+                <th class="py-2 px-4 border-b text-white text-left">Adresse</th>
+                <th class="py-2 px-4 border-b text-white">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in Model)
+            {
+                <tr class="bg-nude hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">@client.Surnom</td>
+                    <td class="py-2 px-4 border-b">@client.Telephone</td>
+                    <td class="py-2 px-4 border-b">@client.Address</td>
+                    <td class="py-2 px-4 border-b text-center">
+                        <!-- Actions -->
+                        <a href="@Url.Action("Details", "Client", new { id = client.Id })" class="text-red-500 hover:text-gray-700" title="Détails">
+                            Détails
+                        </a>
+                        <a href="@Url.Action("Delete", "Client", new { id = client.Id })" class="text-gray-500 hover:text-red-600" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            }
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4" class="py-2 px-4 text-center">Aucun client trouvé.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

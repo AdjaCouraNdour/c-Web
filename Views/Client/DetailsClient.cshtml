@@ -1,0 +1,14 @@
+﻿@model GestionBoutiqueC.Entities.Client
+
+<h2>Détails du Client</h2>
+
+<div>
+    <p><strong>Id :</strong> @Model.Id</p>
+    <p><strong>Surnom :</strong> @Model.Surnom</p>
+    <p><strong>Téléphone :</strong> @Model.Telephone</p>
+    <p><strong>Adresse :</strong> @Model.Address</p>
+    <p><strong>Date de création :</strong> @Model.CreateAt</p>
+    <p><strong>Date de mise à jour :</strong> @Model.UpdateAt</p>
+</div>
+
+<a asp-action="DetailsClient" class="btn btn-secondary">Retour à la liste</a>
