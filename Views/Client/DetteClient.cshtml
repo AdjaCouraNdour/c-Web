@@ -1,0 +1,77 @@
+@model IEnumerable<GestionBoutiqueC.Entities.Dette>
+@{
+    ViewData["Title"] = "Liste des dettes";
+    Layout = "_Layout";
+    var totalMontant = Model.Sum(dette => dette.Montant);
+    var totalMontantVerse = Model.Sum(dette => dette.MontantVerse);
+    var totalMontantRestant = totalMontant - totalMontantVerse;
+}
+
+        <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-md">
+            <div>
+                <h2 class="text-lg font-bold">Informations du Client</h2>
+                <p><strong>Nom :</strong> </p>
+                <p><strong>Téléphone :</strong> </p>
+                <p><strong>Adresse :</strong> </p>
+            </div>
+
+            <div>
+                <h2 class="text-lg font-bold">Détails des Dettes</h2>
+                <ul>
+                    <li><strong>Total Montant :</strong> @totalMontant €</li>
+                    <li><strong>Total Montant Versé :</strong> @totalMontantVerse €</li>
+                    <li><strong>Total Montant Restant :</strong> @totalMontantRestant €</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+            <thead>
+                <tr class="bg-burgundy">
+                    <th class="py-2 px-4 border-b text-white text-left">Montant</th>
+                    <th class="py-2 px-4 border-b text-white text-left">Montant Due</th>
+                    <th class="py-2 px-4 border-b text-white text-left">Montant Verse</th>
+                    <th class="py-2 px-4 border-b text-white">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dette in Model)
+                {
+                    <tr class="bg-nude hover:bg-gray-100">
+                        <td class="py-2 px-4 border-b">@dette.Montant</td>
+                        <td class="py-2 px-4 border-b">@dette.MontantRestant</td>
+                        <td class="py-2 px-4 border-b">@dette.MontantVerse</td>
+                        <td class="py-2 px-4 border-b text-center">
+                                <a href="@Url.Action("DetailsDette", "dette", new { dette = dette.Id })" class="bg-burgundy text-white text-sm px-3 rounded-md flex items-center hover:bg-red-700">
+                                    Details
+                                </a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="py-2 px-4 text-center">Aucun dette trouvé.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+@* 
+@if (Model == null || !Model.Any())
+{
+    <p class="text-center">Aucun dette trouvé pour ce client.</p>
+}
+else
+{
+    // Afficher la table uniquement si des données existent dans le modèle
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <!-- Table header et body -->
+    </table>
+} *@

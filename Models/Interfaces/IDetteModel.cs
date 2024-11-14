@@ -7,6 +7,7 @@ namespace GestionBoutiqueC.Models.Interfaces
     public interface IDetteModel : IModel<Dette>
     {
         IEnumerable<Dette> GetDettes();
+        Task<List<Dette>> FindByClientId(int ClientId);
 
     }
 }

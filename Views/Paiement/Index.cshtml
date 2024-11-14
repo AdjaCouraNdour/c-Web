@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GestionBoutiqueC.Entities.Paiement>
+
+@{
+    ViewData["Title"] = "Liste des Paiement";
+}
+
+
+<div class="flex">
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <thead>
+            <tr class="bg-burgundy">
+                <th class="py-2 px-4 border-b text-white text-left">Date</th>
+                <th class="py-2 px-4 border-b text-white text-left">Montant</th>
+                <th class="py-2 px-4 border-b text-white text-left">Id de la dette</th>
+                <th class="py-2 px-4 border-b text-white text-left">Client</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paiement in Model)
+            {
+                <tr class="bg-nude hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">@paiement.Date</td>
+                    <td class="py-2 px-4 border-b">@paiement.Montant</td>
+                    <td class="py-2 px-4 border-b">@paiement.DetteId</td>
+                    <td class="py-2 px-4 border-b">@paiement?.Dette?.Client?.Surnom</td>
+
+                </tr>
+            }
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4" class="py-2 px-4 text-center">Aucun paiement ce client.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

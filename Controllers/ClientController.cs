@@ -8,16 +8,19 @@ namespace GestionBoutiqueC.Controllers
     public class ClientController : Controller
     {
         private readonly IClientModel _clientModel;
-        
+        private readonly IDetteModel _detteModel;
+
         public IActionResult Index()
         {
             var clients = _clientModel.GetClients();
             return View(clients);
         }
         // Injecter le modèle client (le service ClientModel)
-        public ClientController(IClientModel clientModel)
+        public ClientController(IClientModel clientModel ,IDetteModel detteModel)
         {
             _clientModel = clientModel;
+            _detteModel = detteModel;
+
         }
 
         // Action pour lister tous les clients
@@ -108,5 +111,36 @@ namespace GestionBoutiqueC.Controllers
             await _clientModel.Delete(id);
             return RedirectToAction(nameof(Index)); // Rediriger vers la liste des clients après suppression
         }
+    
+      
+        public async Task<IActionResult> DetteClient(int client)
+        {
+            var clientt = await _clientModel.FindById(client); 
+            if (clientt == null)
+            {
+                return NotFound(); // Ou une gestion d'erreur personnalisée si le client n'est pas trouvé
+            }       
+            var dettes = await _detteModel.FindByClientId(client);
+            
+            ViewBag.Client = clientt;
+            if (dettes == null || !dettes.Any())
+            {
+                dettes = new List<Dette>();
+            }
+
+            return View(dettes);
+        }
+
+        // public async Task<IActionResult> DetteClient(int clientId)
+        // {
+        //     var client = await _clientModel.FindById(clientId); // Remplacez par le service ou méthode adaptée
+        //     var dettes = await _detteModel.FindByClientId(clientId);
+            
+        //     ViewBag.Client = client;
+        //     return View(dettes);
+        // }
+
+
     }
+
 }

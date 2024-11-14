@@ -17,7 +17,7 @@ namespace GestionBoutiqueC.Fixtures
                     Montant = 500.0,
                     MontantVerse = 200.0,
                     MontantRestant = 300.0,
-                    ClientId = 1 // Associer à ClientId 1
+                    ClientId = 1 
                 }
                
             };

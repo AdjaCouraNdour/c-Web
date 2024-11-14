@@ -10,11 +10,8 @@ namespace GestionBoutiqueC.Data
         public DbSet<Client> Clients { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Dette> Dettes { get; set; }
-
         public DbSet<Detail> Details { get; set; }
-
         public DbSet<Article> Articles { get; set; }
-
         public DbSet<Paiement> Paiements { get; set; }
 
         // Autres DbSet pour d'autres entités

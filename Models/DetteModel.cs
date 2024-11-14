@@ -61,14 +61,11 @@ namespace GestionBoutiqueC.Models
             }
         }
 
-        public Task<Dette> FindByLogin(string telephone)
+        public async Task<List<Dette>?> FindByClientId(int client)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Dette> FindByEmail(string telephone)
-        {
-            throw new NotImplementedException();
+            return await _context.Dettes
+                .Where(d => d.ClientId == client) 
+                .ToListAsync();
         }
     }
 }

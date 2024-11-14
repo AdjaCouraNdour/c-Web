@@ -1,4 +1,5 @@
 using GestionBoutiqueC.Entities;
+using GestionBoutiqueC.Models;
 using GestionBoutiqueC.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -107,6 +108,16 @@ namespace GestionBoutiqueC.Controllers
         {
             await _detteModel.Delete(id);
             return RedirectToAction(nameof(Index)); // Rediriger vers la liste des dettes après suppression
+        }
+         public async Task<IActionResult> DetailsDette (int detteId)
+        {
+            var dette = await _detteModel.FindById(detteId);
+            if (dette == null)
+            {
+                return NotFound();
+            }
+            var articles = dette.Details?.Select(d => d.Article).ToList();
+            return View(articles);
         }
     }
 }
