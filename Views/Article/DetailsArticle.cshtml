@@ -1,0 +1,15 @@
+﻿@model GestionBoutiqueC.Entities.Article
+
+<h2>Détails de l'article</h2>
+
+<div>
+    <p><strong>Id :</strong> @Model.Id</p>
+    <p><strong>Libelle :</strong> @Model.Libelle</p>
+    <p><strong>Ref :</strong> @Model.Reference</p>
+    <p><strong>Prix :</strong> @Model.Prix</p>
+    <p><strong>QteStock :</strong> @Model.QteStock</p>
+    <p><strong>Date de création :</strong> @Model.CreateAt</p>
+    <p><strong>Date de mise à jour :</strong> @Model.UpdateAt</p>
+</div>
+
+<a asp-action="ListeArticle" class="btn btn-secondary">Retour à la liste</a>

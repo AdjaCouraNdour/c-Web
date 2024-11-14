@@ -26,54 +26,66 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\KIKI\Documents\ISM L3\C#\GestionBoutiqueWeb
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Client/DetailsClient.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Article/DetailsArticle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZVxEZXRhaWxzQXJ0aWNsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Article/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Client/DetailsClient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNDbGllbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Client/Index.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Client/DetteClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldHRlQ2xpZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Client/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/DetailsClient.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRGV0YWlsc0NsaWVudC5jc2h0bWw=
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/DetailsDette.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRGV0YWlsc0RldHRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/Index.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Home/Index.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Home/Privacy.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Shared/Error.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/User/DetailsClient.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZXRhaWxzQ2xpZW50LmNzaHRtbA==
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/User/DetailsUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZXRhaWxzVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/User/Index.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/_ViewImports.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/_ViewStart.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Shared/_Layout.cshtml]
+[c:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-82270y2vxy
