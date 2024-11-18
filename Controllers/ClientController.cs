@@ -12,7 +12,7 @@ namespace GestionBoutiqueC.Controllers
         private readonly IClientModel _clientModel;
         private readonly IDetteModel _detteModel;
         // Injecter le modèle client (le service ClientModel)
-        public ClientController(IClientModel clientModel ,IDetteModel detteModel)
+        public ClientController(IClientModel clientModel, IDetteModel detteModel)
         {
             _clientModel = clientModel;
             _detteModel = detteModel;
@@ -39,13 +39,26 @@ namespace GestionBoutiqueC.Controllers
 
             return View(clientsPaginated);
         }
+        [HttpGet]
+        public IActionResult FormClient()
+        {
+            return View();
+        }
 
-        // public IActionResult Index()
-        // {
-        //     var clients = _clientModel.GetClients();
-        //     return View(clients);
-        // }
-       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FormClient([Bind("Surnom,Telephone,Address")] Client client)
+        {
+            if (ModelState.IsValid)
+            {
+                var clientAdded = await _clientModel.Create(client);
+                TempData["Message"] = "Client créé avec succès!";
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(client);
+        }
+
 
         // Action pour lister tous les clients
         public async Task<IActionResult> FindAll()
@@ -67,17 +80,22 @@ namespace GestionBoutiqueC.Controllers
 
             return View(client); // Retourner la vue de détails
         }
+        // public async Task<IActionResult> FormClient(int id)
+        // {
+        //     var client = await _clientModel.FindById(id);
+        //     if (client == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return View(client); // Retourner la vue de détails
+        // }
 
         // Action pour afficher le formulaire de création d'un client
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // Action pour enregistrer un client (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Client client)
+        public async Task<IActionResult> CreateClient(Client client)
         {
             if (ModelState.IsValid)
             {
@@ -137,17 +155,17 @@ namespace GestionBoutiqueC.Controllers
             await _clientModel.Delete(id);
             return RedirectToAction(nameof(Index)); // Rediriger vers la liste des clients après suppression
         }
-    
-      
+
+
         public async Task<IActionResult> DetteClient(int client)
         {
-            var clientt = await _clientModel.FindById(client); 
+            var clientt = await _clientModel.FindById(client);
             if (clientt == null)
             {
                 return NotFound(); // Ou une gestion d'erreur personnalisée si le client n'est pas trouvé
-            }       
+            }
             var dettes = await _detteModel.FindByClientId(client);
-            
+
             ViewBag.Client = clientt;
             if (dettes == null || !dettes.Any())
             {

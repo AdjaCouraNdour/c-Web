@@ -67,5 +67,18 @@ namespace GestionBoutiqueC.Models
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<Client> Create(Client client)
+        {
+
+            _context.Clients.Add(client);
+            await _context.SaveChangesAsync();
+            return client;
+        }
+        // public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)
+        // {
+        //     var clients = _context.Clients.AsQueryable<Client>();
+        //     return await PaginationModel<Client>.Paginate(clients, pageSize, page);
+
+        // }
     }
 }
