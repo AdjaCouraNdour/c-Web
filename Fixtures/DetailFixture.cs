@@ -15,6 +15,24 @@ namespace GestionBoutiqueC.Fixtures
                     ArticleId = 1,
                     DetteId = 1 
                 },
+                 new Detail{
+                    Id = 2,
+                    QteDette = 5,
+                    ArticleId = 1,
+                    DetteId = 2 
+                },
+                 new Detail{
+                    Id = 3,
+                    QteDette = 5,
+                    ArticleId = 1,
+                    DetteId = 3 
+                },
+                 new Detail{
+                    Id = 4,
+                    QteDette = 5,
+                    ArticleId = 1,
+                    DetteId = 4 
+                },
             };
         }
     }

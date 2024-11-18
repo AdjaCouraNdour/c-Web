@@ -1,6 +1,8 @@
+using GestionBoutiqueC.Data;
 using GestionBoutiqueC.Entities;
 using GestionBoutiqueC.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace GestionBoutiqueC.Controllers
@@ -9,12 +11,6 @@ namespace GestionBoutiqueC.Controllers
     {
         private readonly IClientModel _clientModel;
         private readonly IDetteModel _detteModel;
-
-        public IActionResult Index()
-        {
-            var clients = _clientModel.GetClients();
-            return View(clients);
-        }
         // Injecter le modèle client (le service ClientModel)
         public ClientController(IClientModel clientModel ,IDetteModel detteModel)
         {
@@ -23,12 +19,42 @@ namespace GestionBoutiqueC.Controllers
 
         }
 
+        public IActionResult Index(int page = 1, int limit = 3)
+        {
+            // Récupérer tous les clients
+            var clients = _clientModel.GetClients()
+                          .OrderBy(c => c.Id) // Optionnel : tri par nom
+                          .Skip((page - 1) * limit) // Ignorer les éléments des pages précédentes
+                          .Take(limit) // Prendre uniquement les éléments pour la page courante
+                          .ToList();
+
+            // Calcul pour la pagination
+            int totalClients = clients.Count();
+            var clientsPaginated = clients.Skip((page - 1) * limit).Take(limit).ToList();
+
+            // Passer les données nécessaires à la vue
+            ViewBag.Page = page;
+            ViewBag.limit = limit;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalClients / limit);
+
+            return View(clientsPaginated);
+        }
+
+        // public IActionResult Index()
+        // {
+        //     var clients = _clientModel.GetClients();
+        //     return View(clients);
+        // }
+       
+
         // Action pour lister tous les clients
-        public async Task<IActionResult> kiki()
+        public async Task<IActionResult> FindAll()
         {
             var clients = await _clientModel.FindAll();
             return View(clients); // Retourner la vue avec la liste des clients
         }
+
+
 
         // Action pour afficher les détails d'un client par son ID
         public async Task<IActionResult> Details(int id)
@@ -131,14 +157,6 @@ namespace GestionBoutiqueC.Controllers
             return View(dettes);
         }
 
-        // public async Task<IActionResult> DetteClient(int clientId)
-        // {
-        //     var client = await _clientModel.FindById(clientId); // Remplacez par le service ou méthode adaptée
-        //     var dettes = await _detteModel.FindByClientId(clientId);
-            
-        //     ViewBag.Client = client;
-        //     return View(dettes);
-        // }
 
 
     }

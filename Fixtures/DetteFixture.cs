@@ -18,6 +18,33 @@ namespace GestionBoutiqueC.Fixtures
                     MontantVerse = 200.0,
                     MontantRestant = 300.0,
                     ClientId = 1 
+                },
+                new Dette
+                {
+                    Id = 2,
+                    Date = DateTime.Now.AddMonths(-1),
+                    Montant = 500.0,
+                    MontantVerse = 200.0,
+                    MontantRestant = 300.0,
+                    ClientId = 2 
+                },
+                new Dette
+                {
+                    Id = 3,
+                    Date = DateTime.Now.AddMonths(-1),
+                    Montant = 500.0,
+                    MontantVerse = 200.0,
+                    MontantRestant = 300.0,
+                    ClientId = 2 
+                },
+                new Dette
+                {
+                    Id = 4,
+                    Date = DateTime.Now.AddMonths(-1),
+                    Montant = 500.0,
+                    MontantVerse = 200.0,
+                    MontantRestant = 300.0,
+                    ClientId = 3 
                 }
                
             };

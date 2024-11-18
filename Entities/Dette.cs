@@ -6,10 +6,6 @@ namespace GestionBoutiqueC.Entities
 {
     public class Dette : AbstractEntity
     {
-
-        // Liste de détails et paiements
-        // public virtual ICollection<Details> ListeDetails { get; set; } = new List<Details>();
-        // public virtual ICollection<Paiement> ListePaiements { get; set; } = new List<Paiement>();
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public double Montant { get; set; }

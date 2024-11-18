@@ -63,7 +63,7 @@ namespace GestionBoutiqueC.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Ajout des fixtures
-            modelBuilder.Entity<Client>().HasData(ClientFixture.GetClients());
+            modelBuilder.Entity<Client>().HasData(ClientFixture.GetClients().ToArray());
             modelBuilder.Entity<User>().HasData(UserFixture.GetUsers().ToArray());
             modelBuilder.Entity<Dette>().HasData(DetteFixture.GetDettes().ToArray());
             modelBuilder.Entity<Detail>().HasData(DetailFixture.GetDetails().ToArray());

@@ -9,15 +9,36 @@ namespace GestionBoutiqueC.Controllers
     {
         private readonly IArticleModel _articleModel;
         
-        public IActionResult Index()
-        {
-            var articles = _articleModel.GetArticles();
-            return View(articles);
-        }
+        // public IActionResult Index()
+        // {
+        //     var articles = _articleModel.GetArticles();
+        //     return View(articles);
+        // }
         // Injecter le modèle article (le service articleModel)
         public ArticleController(IArticleModel articleModel)
         {
             _articleModel = articleModel;
+        }
+
+    public IActionResult Index(int page = 1, int limit = 3)
+        {
+            // Récupérer tous les articles
+            var articles = _articleModel.GetArticles()
+                          .OrderBy(c => c.Libelle) // Optionnel : tri par nom
+                          .Skip((page - 1) * limit) // Ignorer les éléments des pages précédentes
+                          .Take(limit) // Prendre uniquement les éléments pour la page courante
+                          .ToList();
+
+            // Calcul pour la pagination
+            int totalArticles = articles.Count();
+            var articlesPaginated = articles.Skip((page - 1) * limit).Take(limit).ToList();
+
+            // Passer les données nécessaires à la vue
+            ViewBag.Page = page;
+            ViewBag.limit = limit;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalArticles / limit);
+
+            return View(articlesPaginated);
         }
 
         // Action pour lister tous les articles

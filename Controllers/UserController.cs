@@ -9,19 +9,38 @@ namespace GestionBoutiqueC.Controllers
     {
         private readonly IUserModel _userModel;
         
-        public IActionResult Index()
-        {
-            var users = _userModel.GetUsers();
-            return View(users);
-        }
+        // public IActionResult Index()
+        // {
+        //     var users = _userModel.GetUsers();
+        //     return View(users);
+        // }
         // Injecter le modèle user (le service userModel)
         public UserController(IUserModel userModel)
         {
             _userModel = userModel;
         }
+         public IActionResult Index(int page = 1, int limit = 3)
+        {
+            // Récupérer tous les users
+            var users = _userModel.GetUsers()
+                          .OrderBy(c => c.Id) // Optionnel : tri par nom
+                          .Skip((page - 1) * limit) // Ignorer les éléments des pages précédentes
+                          .Take(limit) // Prendre uniquement les éléments pour la page courante
+                          .ToList();
 
+            // Calcul pour la pagination
+            int totalUsers = users.Count();
+            var usersPaginated = users.Skip((page - 1) * limit).Take(limit).ToList();
+
+            // Passer les données nécessaires à la vue
+            ViewBag.Page = page;
+            ViewBag.limit = limit;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalUsers / limit);
+
+            return View(usersPaginated);
+        }
         // Action pour lister tous les users
-        public async Task<IActionResult> kiki()
+        public async Task<IActionResult> list()
         {
             var users = await _userModel.FindAll();
             return View(users); // Retourner la vue avec la liste des users

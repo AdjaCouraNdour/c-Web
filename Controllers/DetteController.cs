@@ -10,17 +10,37 @@ namespace GestionBoutiqueC.Controllers
     {
         private readonly IDetteModel _detteModel;
         
-        public IActionResult Index()
-        {
-            var dettes = _detteModel.GetDettes();
-            return View(dettes);
-        }
+        // public IActionResult Index()
+        // {
+        //     var dettes = _detteModel.GetDettes();
+        //     return View(dettes);
+        // }
         // Injecter le modèle dette (le service detteModel)
         public DetteController(IDetteModel detteModel)
         {
             _detteModel = detteModel;
         }
 
+    public IActionResult Index(int page = 1, int limit = 3)
+        {
+            // Récupérer tous les dettes
+            var dettes = _detteModel.GetDettes()
+                          .OrderBy(c => c.Id) // Optionnel : tri par nom
+                          .Skip((page - 1) * limit) // Ignorer les éléments des pages précédentes
+                          .Take(limit) // Prendre uniquement les éléments pour la page courante
+                          .ToList();
+
+            // Calcul pour la pagination
+            int totalDettes = dettes.Count();
+            var dettesPaginated = dettes.Skip((page - 1) * limit).Take(limit).ToList();
+
+            // Passer les données nécessaires à la vue
+            ViewBag.Page = page;
+            ViewBag.limit = limit;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalDettes / limit);
+
+            return View(dettesPaginated);
+        }
         // Action pour lister tous les dettes
         public async Task<IActionResult> kiki()
         {
