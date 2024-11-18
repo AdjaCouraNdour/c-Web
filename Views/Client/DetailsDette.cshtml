@@ -1,11 +1,16 @@
-﻿@model IEnumerable<GestionBoutiqueC.Entities.Article>
+﻿@model IEnumerable<GestionBoutiqueC.Entities.Detail>
 @{
-    ViewData["Title"] = "Liste des Article";
+    ViewData["Title"] = "Liste des Articles";
     Layout = "_Layout";
- 
 }
 
- <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-md">
+<div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-md">
+    @if (Model == null || !Model.Any())
+    {
+        <p class="py-4 text-center text-gray-500">Aucun article trouvé pour cette dette.</p>
+    }
+    else
+    {
         <table class="min-w-full bg-white border border-gray-300 rounded-lg">
             <thead>
                 <tr class="bg-burgundy">
@@ -15,37 +20,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var article in Model)
+                @foreach (var detail in Model)
                 {
                     <tr class="bg-nude hover:bg-gray-100">
-                        <td class="py-2 px-4 border-b">@article.Libelle</td>
-                        <td class="py-2 px-4 border-b">@article.Prix</td>
-                        <td class="py-2 px-4 border-b">a faire </td>
-                        
-                    </tr>
-                }
-                @if (!Model.Any())
-                {
-                    <tr>
-                        <td colspan="4" class="py-2 px-4 text-center">Aucun article trouvé.</td>
+                        <td class="py-2 px-4 border-b">@detail.Article.Libelle</td>
+                        <td class="py-2 px-4 border-b">@detail.Article.Prix</td>
+                        <td class="py-2 px-4 border-b">@(detail.Article.Prix * detail.QteDette)</td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
-
+    }
 </div>
-
-
-@* 
-@if (Model == null || !Model.Any())
-{
-    <p class="text-center">Aucun article trouvé pour ce client.</p>
-}
-else
-{
-    // Afficher la table uniquement si des données existent dans le modèle
-    <table class="min-w-full bg-white border border-gray-300 rounded-lg">
-        <!-- Table header et body -->
-    </table>
-} *@

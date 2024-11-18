@@ -67,5 +67,10 @@ namespace GestionBoutiqueC.Models
                 .Where(d => d.ClientId == client) 
                 .ToListAsync();
         }
+
+        public async Task<Dette> Create(Dette data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

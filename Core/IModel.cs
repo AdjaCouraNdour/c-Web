@@ -12,7 +12,7 @@ namespace GestionBoutiqueC.Core
         Task<T> FindById(int id);
 
         // Sauvegarder un élément
-        Task Save(T data);
+        Task<T> Create(T data);
 
         // Supprimer un élément par son ID
         Task Delete(int id);

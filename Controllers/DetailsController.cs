@@ -52,7 +52,7 @@ namespace GestionBoutiqueC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _detailModel.Save(detail);
+                await _detailModel.Create(detail);
                 return RedirectToAction(nameof(Index)); // Rediriger vers la liste des details après enregistrement
             }
             return View(detail); // Retourner la vue avec le formulaire si la validation échoue

@@ -4,8 +4,8 @@
     ViewData["Title"] = "Liste des Clients";
 }
 
-    <div class="container mx-auto mt-6">
-        <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+<div class="container mx-auto mt-6">
+    <table class="min-w-full bg-white mb-4 border border-gray-300 rounded-lg">
         <div class="flex justify-between items-center mb-4">
         <div class="text-lg font-bold">
             Liste des clients
@@ -36,7 +36,7 @@
                    <td class="py-2 px-4 border-b text-center">
                         <div class="flex justify-center items-center space-x-4">
                             <!-- Icône Détails -->
-                            <a href="@Url.Action("Details", "Client", new { id = client.Id })" class="text-red-500 hover:text-gray-700">
+                            <a href="@Url.Action("DetailsClient", "Client", new { id = client.Id })" class="text-red-500 hover:text-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                     <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                                 </svg>
@@ -73,29 +73,29 @@
         .
         </span>
         <div class="flex space-x-2">
-            @if (ViewBag.Page > 1)
+            @if (ViewBag.Page >= 1)
             {
                 <a href="@Url.Action("Index", new { page = ViewBag.Page - 1, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border bg-burgundy border-gray-300 text-gray-700 rounded-md hover:bg-gray-100">
-                    &lt; pre
+                   class="px-3 py-1 border bg-burgundy border-gray-300 text-white rounded-md hover:bg-gray-100">
+                    &lt; &lt;
                 </a>
             }
 
             @for (int i = 1; i <= ViewBag.TotalPages; i++)
             {
                 <a href="@Url.Action("Index", new { page = i, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border 
+                   class="px-4 py-1 border 
                           @(i == ViewBag.Page ? "bg-white text-burgundy" : "border-gray-300 text-gray-700 hover:bg-gray-100") 
                           rounded-md">
                     @i
                 </a>
             }
 
-            @if (ViewBag.Page < ViewBag.TotalPages)
+            @if (ViewBag.Page <= ViewBag.TotalPages)
             {
                 <a href="@Url.Action("Index", new { page = ViewBag.Page + 1, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border bg-burgundy border-gray-300 text-gray-700 rounded-md hover:bg-gray-100">
-                    >> &gt;
+                   class="px-3 py-1 border bg-burgundy border-gray-300 text-white rounded-md hover:bg-gray-100">
+                  &gt;>
                 </a>
             }
         </div>

@@ -61,5 +61,17 @@ namespace GestionBoutiqueC.Models
                 await _context.SaveChangesAsync();
             }
         }
+      public async Task<List<Detail>> FindArticleByDetteId(int detteId)
+        {
+            return await _context.Details
+                .Where(de => de.DetteId == detteId)
+                .Include(de => de.Article) // Inclut les informations de l'article si nécessaire
+                .ToListAsync();
+        }
+
+        public async Task<Detail> Create(Detail data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

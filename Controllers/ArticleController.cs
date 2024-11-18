@@ -9,12 +9,6 @@ namespace GestionBoutiqueC.Controllers
     {
         private readonly IArticleModel _articleModel;
         
-        // public IActionResult Index()
-        // {
-        //     var articles = _articleModel.GetArticles();
-        //     return View(articles);
-        // }
-        // Injecter le modèle article (le service articleModel)
         public ArticleController(IArticleModel articleModel)
         {
             _articleModel = articleModel;
@@ -41,11 +35,24 @@ namespace GestionBoutiqueC.Controllers
             return View(articlesPaginated);
         }
 
-        // Action pour lister tous les articles
-        public async Task<IActionResult> kiki()
+        [HttpGet]
+        public IActionResult FormArticle()
         {
-            var articles = await _articleModel.FindAll();
-            return View(articles); // Retourner la vue avec la liste des articles
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FormArticle([Bind("Libelle,Prix,QteStock")] Article article)
+        {
+            if (ModelState.IsValid)
+            {
+                var articleAdded = await _articleModel.Create(article);
+                TempData["Message"] = "article créé avec succès!";
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(article);
         }
 
         // Action pour afficher les détails d'un article par son ID
@@ -58,25 +65,6 @@ namespace GestionBoutiqueC.Controllers
             }
 
             return View(article); // Retourner la vue de détails
-        }
-
-        // Action pour afficher le formulaire de création d'un article
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // Action pour enregistrer un article (POST)
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Article article)
-        {
-            if (ModelState.IsValid)
-            {
-                await _articleModel.Save(article);
-                return RedirectToAction(nameof(Index)); // Rediriger vers la liste des articles après enregistrement
-            }
-            return View(article); // Retourner la vue avec le formulaire si la validation échoue
         }
 
         // Action pour afficher le formulaire d'édition d'un article

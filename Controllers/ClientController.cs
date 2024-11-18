@@ -11,12 +11,13 @@ namespace GestionBoutiqueC.Controllers
     {
         private readonly IClientModel _clientModel;
         private readonly IDetteModel _detteModel;
+            //    private readonly IDetailsModel _detailsModel;
         // Injecter le modèle client (le service ClientModel)
         public ClientController(IClientModel clientModel, IDetteModel detteModel)
         {
             _clientModel = clientModel;
             _detteModel = detteModel;
-
+            // _detailsModel = detailsModel;
         }
 
         public IActionResult Index(int page = 1, int limit = 3)
@@ -70,7 +71,7 @@ namespace GestionBoutiqueC.Controllers
 
 
         // Action pour afficher les détails d'un client par son ID
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> DetailsClient(int id)
         {
             var client = await _clientModel.FindById(id);
             if (client == null)
@@ -80,30 +81,7 @@ namespace GestionBoutiqueC.Controllers
 
             return View(client); // Retourner la vue de détails
         }
-        // public async Task<IActionResult> FormClient(int id)
-        // {
-        //     var client = await _clientModel.FindById(id);
-        //     if (client == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     return View(client); // Retourner la vue de détails
-        // }
-
-        // Action pour afficher le formulaire de création d'un client
-        // Action pour enregistrer un client (POST)
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateClient(Client client)
-        {
-            if (ModelState.IsValid)
-            {
-                await _clientModel.Save(client);
-                return RedirectToAction(nameof(Index)); // Rediriger vers la liste des clients après enregistrement
-            }
-            return View(client); // Retourner la vue avec le formulaire si la validation échoue
-        }
+    
 
         // Action pour afficher le formulaire d'édition d'un client
         public async Task<IActionResult> Edit(int id)
@@ -174,8 +152,7 @@ namespace GestionBoutiqueC.Controllers
 
             return View(dettes);
         }
-
-
+    
 
     }
 

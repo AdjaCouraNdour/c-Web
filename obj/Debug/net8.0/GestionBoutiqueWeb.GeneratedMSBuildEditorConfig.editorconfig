@@ -30,6 +30,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZVxEZXRhaWxzQXJ0aWNsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Article/FormArticle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZVxGb3JtQXJ0aWNsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Article/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -56,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/DetailsDette.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRGV0YWlsc0RldHRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/FormDette.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRm9ybURldHRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/Index.cshtml]

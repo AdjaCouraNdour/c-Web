@@ -27,7 +27,7 @@
 
 
 
-        <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <table class="min-w-full bg-white border  mb-4 border-gray-300 rounded-lg">
             <thead>
                 <tr class="bg-burgundy">
                     <th class="py-2 px-4 border-b text-white text-left">Montant</th>
@@ -44,12 +44,13 @@
                         <td class="py-2 px-4 border-b">@dette.MontantRestant</td>
                         <td class="py-2 px-4 border-b">@dette.MontantVerse</td>
                         <td class="py-2 px-4 border-b text-center">
-                                <a href="@Url.Action("DetailsDette", "dette", new { dette = dette.Id })" class="bg-burgundy text-white text-sm px-3 rounded-md flex items-center hover:bg-red-700">
+                                <a href="@Url.Action("DetailsDette", "Client", new { detteId = dette.Id })" class="bg-burgundy text-white text-sm px-4 rounded-lg hover:bg-red-700">
                                     Details
                                 </a>
                         </td>
                     </tr>
                 }
+
                 @if (!Model.Any())
                 {
                     <tr>
@@ -58,6 +59,8 @@
                 }
             </tbody>
         </table>
+        <a asp-action="Index" class="bg-burgundy text-white py-2 text-sm px-4 rounded-lg hover:bg-red"><--back to liste</a>
+
     </div>
 
 </div>

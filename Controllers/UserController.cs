@@ -8,13 +8,7 @@ namespace GestionBoutiqueC.Controllers
     public class UserController : Controller
     {
         private readonly IUserModel _userModel;
-        
-        // public IActionResult Index()
-        // {
-        //     var users = _userModel.GetUsers();
-        //     return View(users);
-        // }
-        // Injecter le modèle user (le service userModel)
+    
         public UserController(IUserModel userModel)
         {
             _userModel = userModel;
@@ -39,11 +33,25 @@ namespace GestionBoutiqueC.Controllers
 
             return View(usersPaginated);
         }
-        // Action pour lister tous les users
-        public async Task<IActionResult> list()
+
+         [HttpGet]
+        public IActionResult FormUser()
         {
-            var users = await _userModel.FindAll();
-            return View(users); // Retourner la vue avec la liste des users
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FormUser([Bind("Id,Login,Email,Password,Actif,UserRole")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var userAdded = await _userModel.Create(user);
+                TempData["Message"] = "user créé avec succès!";
+                return RedirectToAction(nameof(Index));
+
+            }
+            return View(user);
         }
 
         // Action pour afficher les détails d'un user par son ID
@@ -71,7 +79,7 @@ namespace GestionBoutiqueC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _userModel.Save(user);
+                await _userModel.Create(user);
                 return RedirectToAction(nameof(Index)); // Rediriger vers la liste des users après enregistrement
             }
             return View(user); // Retourner la vue avec le formulaire si la validation échoue

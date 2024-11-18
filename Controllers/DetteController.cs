@@ -9,19 +9,15 @@ namespace GestionBoutiqueC.Controllers
     public class DetteController : Controller
     {
         private readonly IDetteModel _detteModel;
-        
-        // public IActionResult Index()
-        // {
-        //     var dettes = _detteModel.GetDettes();
-        //     return View(dettes);
-        // }
-        // Injecter le modèle dette (le service detteModel)
-        public DetteController(IDetteModel detteModel)
+        private readonly IDetailsModel _detailsModel;
+
+        public DetteController(IDetteModel detteModel,IDetailsModel detailsModel )
         {
             _detteModel = detteModel;
+            _detailsModel= detailsModel;
         }
 
-    public IActionResult Index(int page = 1, int limit = 3)
+        public IActionResult Index(int page = 1, int limit = 3)
         {
             // Récupérer tous les dettes
             var dettes = _detteModel.GetDettes()
@@ -73,7 +69,7 @@ namespace GestionBoutiqueC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _detteModel.Save(dette);
+                await _detteModel.Create(dette);
                 return RedirectToAction(nameof(Index)); // Rediriger vers la liste des dettes après enregistrement
             }
             return View(dette); // Retourner la vue avec le formulaire si la validation échoue
@@ -129,15 +125,31 @@ namespace GestionBoutiqueC.Controllers
             await _detteModel.Delete(id);
             return RedirectToAction(nameof(Index)); // Rediriger vers la liste des dettes après suppression
         }
-         public async Task<IActionResult> DetailsDette (int detteId)
+        [HttpGet]
+        [Route("Client/DetailsDette")]
+        public async Task<IActionResult> DetailsDette(int detteId)
         {
+            // Récupérer la dette
             var dette = await _detteModel.FindById(detteId);
             if (dette == null)
             {
-                return NotFound();
+                // Dette introuvable
+                return NotFound(); // Vous pouvez personnaliser cette erreur
             }
-            var articles = dette.Details?.Select(d => d.Article).ToList();
-            return View(articles);
+
+            // Récupérer les détails liés à la dette
+            var details = await _detailsModel.FindArticleByDetteId(detteId);
+
+            if (details == null || !details.Any())
+            {
+                // Aucun détail trouvé pour cette dette
+                return View(new List<Detail>()); // Vue vide
+            }
+
+            // Passer les informations à la vue
+            ViewBag.Dette = dette; // Si nécessaire, transmettre l'objet complet de la dette
+            return View(details);
         }
+
     }
 }

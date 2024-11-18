@@ -1,3 +1,4 @@
+using GestionBoutiqueC.Core;
 using GestionBoutiqueC.Data;
 using GestionBoutiqueC.Entities;
 using GestionBoutiqueC.Enums;
@@ -63,6 +64,11 @@ namespace GestionBoutiqueC.Models
         }
 
         public Task<Article> FindByEtat(EtatArticle etat)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Article> Create(Article data)
         {
             throw new NotImplementedException();
         }

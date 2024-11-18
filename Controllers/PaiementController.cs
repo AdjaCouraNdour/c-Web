@@ -52,7 +52,7 @@ namespace GestionBoutiqueC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _paiementModel.Save(paiement);
+                await _paiementModel.Create(paiement);
                 return RedirectToAction(nameof(Index)); // Rediriger vers la liste des paiements après enregistrement
             }
             return View(paiement); // Retourner la vue avec le formulaire si la validation échoue

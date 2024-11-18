@@ -9,7 +9,7 @@
 
 <div class="flex">
     <div class="w-full p-6">
-        <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+        <table class="min-w-full bg-white mb-4 border border-gray-300 rounded-lg">
             <thead>
                 <tr class="bg-burgundy">
                     <th class="py-2 px-4 border-b text-white text-left">libelle</th>
@@ -60,29 +60,29 @@
         .
         </span>
         <div class="flex space-x-2">
-            @if (ViewBag.Page > 1)
+            @if (ViewBag.Page >= 1)
             {
                 <a href="@Url.Action("Index", new { page = ViewBag.Page - 1, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border bg-burgundy border-gray-300 text-gray-700 rounded-md hover:bg-gray-100">
-                    &lt; pre
+                   class="px-3 py-1 border bg-burgundy border-gray-300 text-white rounded-md hover:bg-gray-100">
+                    &lt; &lt;
                 </a>
             }
 
             @for (int i = 1; i <= ViewBag.TotalPages; i++)
             {
                 <a href="@Url.Action("Index", new { page = i, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border 
+                   class="px-4 py-1 border 
                           @(i == ViewBag.Page ? "bg-white text-burgundy" : "border-gray-300 text-gray-700 hover:bg-gray-100") 
                           rounded-md">
                     @i
                 </a>
             }
 
-            @if (ViewBag.Page < ViewBag.TotalPages)
+            @if (ViewBag.Page <= ViewBag.TotalPages)
             {
                 <a href="@Url.Action("Index", new { page = ViewBag.Page + 1, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border bg-burgundy border-gray-300 text-gray-700 rounded-md hover:bg-gray-100">
-                    >> &gt;
+                   class="px-3 py-1 border bg-burgundy border-gray-300 text-white rounded-md hover:bg-gray-100">
+                  &gt;>
                 </a>
             }
         </div>
