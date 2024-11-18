@@ -19,14 +19,7 @@ namespace GestionBoutiqueC.Controllers
         {
             _paiementModel = paiementModel;
         }
-
-        // Action pour lister tous les paiements
-        public async Task<IActionResult> kiki()
-        {
-            var paiements = await _paiementModel.FindAll();
-            return View(paiements); // Retourner la vue avec la liste des paiements
-        }
-
+       
         // Action pour afficher les détails d'un paiement par son ID
         public async Task<IActionResult> Details(int id)
         {
@@ -108,5 +101,7 @@ namespace GestionBoutiqueC.Controllers
             await _paiementModel.Delete(id);
             return RedirectToAction(nameof(Index)); // Rediriger vers la liste des paiements après suppression
         }
+
+
     }
 }

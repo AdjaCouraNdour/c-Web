@@ -1,6 +1,8 @@
 using GestionBoutiqueC.Entities;
+using GestionBoutiqueC.Enums;
 using GestionBoutiqueC.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace GestionBoutiqueC.Controllers
@@ -37,6 +39,7 @@ namespace GestionBoutiqueC.Controllers
          [HttpGet]
         public IActionResult FormUser()
         {
+            ViewBag.UserRoles = GetRolesAsSelectList();
             return View();
         }
 
@@ -54,6 +57,19 @@ namespace GestionBoutiqueC.Controllers
             return View(user);
         }
 
+        public SelectList GetRolesAsSelectList()
+        {
+            // Convertit l'énumération en une liste de paires valeur-texte
+            var roles = Enum.GetValues(typeof(UserRole))
+                            .Cast<UserRole>()
+                            .Select(role => new SelectListItem
+                            {
+                                Value = role.ToString(),
+                                Text = role.ToString()
+                            }).ToList();
+
+            return new SelectList(roles, "Value", "Text");
+        }
         // Action pour afficher les détails d'un user par son ID
         public async Task<IActionResult> Details(int id)
         {

@@ -70,5 +70,12 @@ namespace GestionBoutiqueC.Models
         {
             throw new NotImplementedException();
         }
+
+        public async Task<User> Create(User data)
+         {
+            _context.Users.Add(data);
+            await _context.SaveChangesAsync();
+            return data;
+        }
     }
 }

@@ -69,8 +69,11 @@ namespace GestionBoutiqueC.Models
         }
 
         public async Task<Article> Create(Article data)
-        {
-            throw new NotImplementedException();
+         {
+
+            _context.Articles.Add(data);
+            await _context.SaveChangesAsync();
+            return data;
         }
     }
 }

@@ -1,0 +1,38 @@
+@using GestionBoutiqueC.Entities
+
+@model Paiement
+@{
+    ViewData["Title"] = "Paiement d'une Dette";
+    var dette = ViewBag.Dette as Dette;
+}
+
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg">
+    <div class="bg-gray-800 text-white text-lg font-bold p-4 rounded-t-lg">Paiement d'une Dette</div>
+
+    <div class="p-6">
+        <div class="mb-6">
+            <h2 class="text-lg font-bold mb-4">Détails de la Dette</h2>
+            <ul class="list-disc pl-5">
+                <li><strong>Montant Total :</strong> @dette.Montant €</li>
+                <li><strong>Montant Versé :</strong> @dette.MontantVerse €</li>
+                <li><strong>Montant Restant :</strong> @(dette.Montant - dette.MontantVerse) €</li>
+            </ul>
+        </div>
+
+        <form asp-action="FormPaiement" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="DetteId" value="@dette.Id" />
+
+            <div class="mb-4">
+                <label for="Montant" class="block text-sm font-bold mb-2">Montant à Payer</label>
+                <input type="number" asp-for="Montant" class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring" step="0.01" min="0" max="@(dette.Montant - dette.MontantVerse)" required />
+                <span asp-validation-for="Montant" class="text-red-500 text-xs italic"></span>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-burgundy text-white font-bold py-2 px-4 rounded hover:bg-gray-700">Soumettre</button>
+            </div>
+        </form>
+    </div>
+</div>

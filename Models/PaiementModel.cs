@@ -60,5 +60,12 @@ namespace GestionBoutiqueC.Models
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<Paiement> Create(Paiement data)
+        {
+            _context.Paiements.Add(data);
+            await _context.SaveChangesAsync();
+            return data;
+        }
     }
 }

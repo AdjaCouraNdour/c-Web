@@ -28,6 +28,16 @@
 
 
         <table class="min-w-full bg-white border  mb-4 border-gray-300 rounded-lg">
+    <div class="flex justify-between mb-4 items-center mb-4">
+        <div class="text-lg font-bold">
+            Liste de ces dettes
+        </div>
+        <div>
+            <a class="bg-burgundy text-white text-sm px-4 py-2 rounded-lg hover:bg-red-700" asp-action="FormPaiement">
+                Payer 
+            </a>
+        </div>
+    </div>
             <thead>
                 <tr class="bg-burgundy">
                     <th class="py-2 px-4 border-b text-white text-left">Montant</th>
@@ -46,6 +56,9 @@
                         <td class="py-2 px-4 border-b text-center">
                                 <a href="@Url.Action("DetailsDette", "Client", new { detteId = dette.Id })" class="bg-burgundy text-white text-sm px-4 rounded-lg hover:bg-red-700">
                                     Details
+                                </a>
+                                 <a href="@Url.Action("FormPaiement", "Dette", new { detteId = dette.Id })" class="bg-burgundy text-white text-sm px-4 rounded-lg hover:bg-red-700">
+                                    Payer 
                                 </a>
                         </td>
                     </tr>

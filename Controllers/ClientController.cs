@@ -61,15 +61,6 @@ namespace GestionBoutiqueC.Controllers
         }
 
 
-        // Action pour lister tous les clients
-        public async Task<IActionResult> FindAll()
-        {
-            var clients = await _clientModel.FindAll();
-            return View(clients); // Retourner la vue avec la liste des clients
-        }
-
-
-
         // Action pour afficher les détails d'un client par son ID
         public async Task<IActionResult> DetailsClient(int id)
         {
@@ -152,7 +143,6 @@ namespace GestionBoutiqueC.Controllers
 
             return View(dettes);
         }
-    
 
     }
 

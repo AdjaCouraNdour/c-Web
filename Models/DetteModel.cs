@@ -68,9 +68,12 @@ namespace GestionBoutiqueC.Models
                 .ToListAsync();
         }
 
-        public async Task<Dette> Create(Dette data)
+        public async Task<Dette> Create(Dette dette)
         {
-            throw new NotImplementedException();
+
+            _context.Dettes.Add(dette);
+            await _context.SaveChangesAsync();
+            return dette;
         }
     }
 }

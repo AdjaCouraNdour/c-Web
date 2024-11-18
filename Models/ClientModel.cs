@@ -70,7 +70,6 @@ namespace GestionBoutiqueC.Models
         }
         public async Task<Client> Create(Client client)
         {
-
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
             return client;

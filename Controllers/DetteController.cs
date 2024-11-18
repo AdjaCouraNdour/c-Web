@@ -10,11 +10,14 @@ namespace GestionBoutiqueC.Controllers
     {
         private readonly IDetteModel _detteModel;
         private readonly IDetailsModel _detailsModel;
+        private readonly IPaiementModel _paiementModel;
 
-        public DetteController(IDetteModel detteModel,IDetailsModel detailsModel )
+        public DetteController(IDetteModel detteModel,IDetailsModel detailsModel ,IPaiementModel paiementModel)
         {
             _detteModel = detteModel;
             _detailsModel= detailsModel;
+            _paiementModel= paiementModel;
+
         }
 
         public IActionResult Index(int page = 1, int limit = 3)
@@ -36,12 +39,6 @@ namespace GestionBoutiqueC.Controllers
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalDettes / limit);
 
             return View(dettesPaginated);
-        }
-        // Action pour lister tous les dettes
-        public async Task<IActionResult> kiki()
-        {
-            var dettes = await _detteModel.FindAll();
-            return View(dettes); // Retourner la vue avec la liste des dettes
         }
 
         // Action pour afficher les détails d'un dette par son ID
@@ -150,6 +147,60 @@ namespace GestionBoutiqueC.Controllers
             ViewBag.Dette = dette; // Si nécessaire, transmettre l'objet complet de la dette
             return View(details);
         }
+
+        public async Task<IActionResult> FormPaiement(int detteId)
+        {
+            var dette = await _detteModel.FindById(detteId); // Récupère la dette
+            if (dette == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Dette = dette; // Passe les détails de la dette à la vue
+            return View(new Paiement { DetteId = dette.Id });
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FormPaiement([Bind("Montant, DetteId")] Paiement paiement)
+        {
+            if (!ModelState.IsValid)
+            {
+                var dette = await _detteModel.FindById(paiement.DetteId);
+                ViewBag.Dette = dette;
+                return View(paiement);
+            }
+
+            var detteToUpdate = await _detteModel.FindById(paiement.DetteId);
+            if (detteToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            // Validation du paiement
+            if (paiement.Montant <= 0 || paiement.Montant > detteToUpdate.MontantRestant)
+            {
+                ModelState.AddModelError("Montant", "Montant invalide.");
+                ViewBag.Dette = detteToUpdate;
+                return View(paiement);
+            }
+
+            // Enregistre le paiement
+            await _paiementModel.Create(paiement);
+
+            // Met à jour la dette
+            detteToUpdate.MontantVerse += paiement.Montant;
+            if (detteToUpdate.MontantVerse >= detteToUpdate.Montant)
+            {
+                detteToUpdate.TypeDette = Enums.TypeDette.Solde ; 
+            }
+            await _detteModel.Update(detteToUpdate);
+
+            TempData["Message"] = "Paiement effectué avec succès !";
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }
