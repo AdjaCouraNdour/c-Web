@@ -94,16 +94,8 @@ namespace GestionBoutiqueC.Controllers
                 return NotFound();
             }
 
-            return View(paiement); // Retourner la vue de confirmation de suppression
-        }
-
-        // Action pour supprimer un paiement (POST)
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
             await _paiementModel.Delete(id);
-            return RedirectToAction(nameof(Index)); // Rediriger vers la liste des paiements après suppression
+            return RedirectToAction(nameof(Index));
         }
 
     

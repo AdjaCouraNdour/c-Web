@@ -56,7 +56,7 @@ namespace GestionBoutiqueC.Controllers
         }
 
         // Action pour afficher les détails d'un article par son ID
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> DetailsArticle(int id)
         {
             var article = await _articleModel.FindById(id);
             if (article == null)
@@ -106,16 +106,8 @@ namespace GestionBoutiqueC.Controllers
                 return NotFound();
             }
 
-            return View(article); // Retourner la vue de confirmation de suppression
-        }
-
-        // Action pour supprimer un article (POST)
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
             await _articleModel.Delete(id);
-            return RedirectToAction(nameof(Index)); // Rediriger vers la liste des articles après suppression
+            return RedirectToAction(nameof(Index));
         }
     }
 }

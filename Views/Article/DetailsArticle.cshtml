@@ -1,15 +1,33 @@
 ﻿@model GestionBoutiqueC.Entities.Article
 
-<h2>Détails de l'article</h2>
+<h2 class="text-3xl font-bold text-white text-center bg-burgundy p-4 rounded-t-lg">Détails <del> l4article</del></h2>
 
-<div>
-    <p><strong>Id :</strong> @Model.Id</p>
-    <p><strong>Libelle :</strong> @Model.Libelle</p>
-    <p><strong>Ref :</strong> @Model.Reference</p>
-    <p><strong>Prix :</strong> @Model.Prix</p>
-    <p><strong>QteStock :</strong> @Model.QteStock</p>
-    <p><strong>Date de création :</strong> @Model.CreateAt</p>
-    <p><strong>Date de mise à jour :</strong> @Model.UpdateAt</p>
+<div class="container mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div class="space-y-4 mb-4">
+    <div class="mb-4">
+        <p class="font-medium text-gray-700"><strong>Id :</strong> @Model.Id</p>
+    </div>
+    <div class="mb-4">
+        <p class="font-medium text-gray-700"><strong>Libelle :</strong> @Model.Libelle</p>
+    </div>
+    <div class="mb-4">
+        <p class="font-medium text-gray-700"><strong>Ref :</strong> @Model.Reference</p>
+    </div>
+    <div class="mb-4">
+        <p class="font-medium text-gray-700"><strong>Prix :</strong> @Model.Prix</p>
+    </div>
+    <div class="mb-4">
+        <p class="font-medium text-gray-700"><strong>QteStock :</strong> @Model.QteStock</p>
+    </div>
+    <div class="mb-4">
+        <p class="font-medium text-gray-700"><strong>Date de création :</strong> @Model.CreateAt</p>
+    </div>
+    <div class="mb-6">
+        <p class="font-medium text-gray-700"><strong>Date de mise à jour :</strong> @Model.UpdateAt</p>
+    </div>
+    
+    <!-- Lien pour retourner à la liste des articles -->
+    <a href="@Url.Action("Index", "Article")" class="inline-block px-6 py-2 bg-burgundy text-white font-semibold rounded-lg hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        Retour à la liste
+    </a>
 </div>
-
-<a asp-action="ListeArticle" class="btn btn-secondary">Retour à la liste</a>

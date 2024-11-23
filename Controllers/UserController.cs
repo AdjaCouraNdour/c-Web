@@ -71,7 +71,7 @@ namespace GestionBoutiqueC.Controllers
             return new SelectList(roles, "Value", "Text");
         }
         // Action pour afficher les détails d'un user par son ID
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> DetailsUser(int id)
         {
             var user = await _userModel.FindById(id);
             if (user == null)
@@ -140,16 +140,8 @@ namespace GestionBoutiqueC.Controllers
                 return NotFound();
             }
 
-            return View(user); // Retourner la vue de confirmation de suppression
-        }
-
-        // Action pour supprimer un user (POST)
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
             await _userModel.Delete(id);
-            return RedirectToAction(nameof(Index)); // Rediriger vers la liste des users après suppression
+            return RedirectToAction(nameof(Index));
         }
     }
 }
