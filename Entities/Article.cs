@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using GestionBoutiqueC;
 using GestionBoutiqueC.Enums;
+using GestionBoutiqueC.Validator;
 
 namespace GestionBoutiqueC.Entities
 {
@@ -18,13 +19,14 @@ namespace GestionBoutiqueC.Entities
         }
 
         [Required(ErrorMessage = "Le libelle est obligatoire")]
+        [UniqueLibelle(ErrorMessage = "Ce libelle est deja existant.")]
         public string Libelle { get ; set ; }
         public string Reference { get ; set ; }
         
         [Required(ErrorMessage = "Le prix est obligatoire")]
         public int Prix { get ; set ; }
 
-        [Required(ErrorMessage = "Le libelle est obligatoire")]
+        [Required(ErrorMessage = "La qte est obligatoire")]
         public double QteStock { get ; set ; }
 
         public EtatArticle EtatArticle { get ; set ; }

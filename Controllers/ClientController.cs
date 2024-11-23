@@ -111,17 +111,11 @@ namespace GestionBoutiqueC.Controllers
             {
                 return NotFound();
             }
-            return View(client);
-        }
 
-        // Action pour confirmer la suppression d'un client
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
             await _clientModel.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+
 
         // Action pour afficher les dettes d'un client
         public async Task<IActionResult> DetteClient(int client)

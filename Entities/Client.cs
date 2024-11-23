@@ -20,6 +20,7 @@ namespace GestionBoutiqueC.Entities
         [UniqueSurnom(ErrorMessage = "Le surnom est deja utulisé")]
         public string Surnom { get; set; }
 
+        [UniqueTelephone(ErrorMessage="le telephone doit etre unique")]
         [Required(ErrorMessage = "Le telephone est obligatoire")]
         [RegularExpression(@"^(77|78|76)[0-9]{7}$",ErrorMessage = "Le telephone doit etrre sous forme 77xxxxxxx ou 78xxxxxxx ou 76xxxxxxx")]
         public string Telephone { get; set; }
