@@ -1,31 +1,123 @@
-@* @using GestionBoutiqueC.Entities
-@model Dette
+@model GestionBoutiqueC.Entities.Dette
 
-<div class="max-w-md mx-auto bg-white shadow-md rounded-lg">
-    <div class="bg-gray-800 text-white text-lg font-bold p-4 rounded-t-lg">Création Client</div>
-    <div class="p-6">
+@{
+    ViewData["Title"] = "Créer une Dette";
+}
 
-        <form asp-action="FormDette"  method="post">
-            <div class="mb-4">
-                <label for="Surnom" class="block text-burgundy text-sm font-bold mb-2" asp-for="Surnom">Surnom</label>
-                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Surnom" id="" />
-                <span class="text-red-500 text-xs italic" asp-validation-for="Surnom"></span>
-            </div>
+<h2>@ViewData["Title"]</h2>
 
-            <div class="mb-4">
-                <label for="Telephone" class="block text-burgundy text-sm font-bold mb-2" asp-for="Telephone">Téléphone</label>
-                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Telephone" id="" />
-                <span class="text-red-500 text-xs italic" asp-validation-for="Telephone"></span>
-            </div>
+<form asp-action="FormDette" method="post">
+    <div class="row">
+        <!-- Tableau des articles disponibles -->
+        <div class="col-md-6">
+            <h3>Articles disponibles</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sélectionner</th>
+                        <th>Article</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody id="articlesTable">
+                    @foreach (var article in ViewBag.Articles)
+                    {
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-success" onclick="addArticle(@article.Id, '@article.Name', @article.Price)">Ajouter</button>
+                            </td>
+                            <td>@article.Name</td>
+                            <td>@article.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-            <div class="mb-4">
-                <label for="Address" class="block text-burgundy text-sm font-bold mb-2" asp-for="Address">Adresse</label>
-                <textarea type="text" id="Address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Address"></textarea>
-            </div>
-
-            <div class="flex justify-end">
-                <button class="bg-burgundy text-white font-bold py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-400" type="submit">Soumettre</button>
-            </div>
-        </form>
+        <!-- Tableau des articles sélectionnés -->
+        <div class="col-md-6">
+            <h3>Articles sélectionnés</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Quantité</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="selectedArticlesTable">
+                    <!-- Les articles ajoutés seront affichés ici -->
+                </tbody>
+            </table>
+        </div>
     </div>
-</div> *@
+
+    <button type="submit" class="btn btn-success">Enregistrer la Dette</button>
+</form>
+
+@section Scripts {
+    <script>
+        let selectedArticles = [];
+
+        function addArticle(articleId, articleName, articlePrice) {
+            // Vérifier si l'article est déjà dans la liste des articles sélectionnés
+            const existingArticle = selectedArticles.find(article => article.articleId === articleId);
+            if (existingArticle) {
+                // Si l'article est déjà sélectionné, on n'ajoute pas de doublon
+                alert("Cet article a déjà été ajouté !");
+                return;
+            }
+
+            // Ajouter l'article à la liste sélectionnée avec une quantité par défaut de 1
+            selectedArticles.push({
+                articleId,
+                articleName,
+                quantity: 1,
+                price: articlePrice
+            });
+
+            // Mettre à jour la table des articles sélectionnés
+            updateSelectedArticlesTable();
+        }
+
+        function updateSelectedArticlesTable() {
+            const tableBody = document.getElementById("selectedArticlesTable");
+            tableBody.innerHTML = '';  // Effacer le contenu précédent
+
+            selectedArticles.forEach((item, index) => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${item.articleName}</td>
+                    <td>
+                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)" class="form-control" style="width: 60px;" />
+                    </td>
+                    <td><button type="button" class="btn btn-danger" onclick="removeArticle(${index})">Supprimer</button></td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateQuantity(index, quantity) {
+            // Mettre à jour la quantité de l'article sélectionné
+            selectedArticles[index].quantity = parseInt(quantity);
+        }
+
+        function removeArticle(index) {
+            // Supprimer l'article de la liste sélectionnée
+            selectedArticles.splice(index, 1);
+            updateSelectedArticlesTable();
+        }
+
+        // Ajouter les articles sélectionnés au formulaire avant la soumission
+        document.querySelector("form").addEventListener("submit", function () {
+            // Créer un champ caché pour envoyer la liste des articles sélectionnés
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "selectedArticles";
+            input.value = JSON.stringify(selectedArticles);
+            this.appendChild(input);
+        });
+    </script>
+}

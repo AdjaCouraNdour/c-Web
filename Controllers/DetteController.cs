@@ -1,8 +1,8 @@
 using GestionBoutiqueC.Entities;
-using GestionBoutiqueC.Models;
+using GestionBoutiqueC.Enums;
 using GestionBoutiqueC.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+
 
 namespace GestionBoutiqueC.Controllers
 {
@@ -11,29 +11,30 @@ namespace GestionBoutiqueC.Controllers
         private readonly IDetteModel _detteModel;
         private readonly IDetailsModel _detailsModel;
         private readonly IPaiementModel _paiementModel;
+        private readonly IClientModel _clientModel;
+        private readonly IArticleModel _articleModel;
 
-        public DetteController(IDetteModel detteModel,IDetailsModel detailsModel ,IPaiementModel paiementModel)
+        public DetteController(IDetteModel detteModel, IDetailsModel detailsModel, IPaiementModel paiementModel, IClientModel clientModel,IArticleModel articleModel)
         {
             _detteModel = detteModel;
-            _detailsModel= detailsModel;
-            _paiementModel= paiementModel;
-
+            _detailsModel = detailsModel;
+            _paiementModel = paiementModel;
+            _clientModel = clientModel;
+            _articleModel=articleModel;
         }
 
+        // Action pour afficher la liste des dettes avec pagination
         public IActionResult Index(int page = 1, int limit = 3)
         {
-            // Récupérer tous les dettes
             var dettes = _detteModel.GetDettes()
-                          .OrderBy(c => c.Id) // Optionnel : tri par nom
-                          .Skip((page - 1) * limit) // Ignorer les éléments des pages précédentes
-                          .Take(limit) // Prendre uniquement les éléments pour la page courante
+                          .OrderBy(c => c.Id)
+                          .Skip((page - 1) * limit)
+                          .Take(limit)
                           .ToList();
 
-            // Calcul pour la pagination
             int totalDettes = dettes.Count();
             var dettesPaginated = dettes.Skip((page - 1) * limit).Take(limit).ToList();
 
-            // Passer les données nécessaires à la vue
             ViewBag.Page = page;
             ViewBag.limit = limit;
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalDettes / limit);
@@ -41,7 +42,7 @@ namespace GestionBoutiqueC.Controllers
             return View(dettesPaginated);
         }
 
-        // Action pour afficher les détails d'un dette par son ID
+        // Action pour afficher les détails d'une dette
         public async Task<IActionResult> Details(int id)
         {
             var dette = await _detteModel.FindById(id);
@@ -49,30 +50,119 @@ namespace GestionBoutiqueC.Controllers
             {
                 return NotFound();
             }
-
-            return View(dette); // Retourner la vue de détails
+            return View(dette);
         }
 
-        // Action pour afficher le formulaire de création d'un dette
-        public IActionResult Create()
+        // Action pour afficher le formulaire de création d'une dette
+        public async Task<IActionResult> FormDette(int clientId)
         {
+            var client = await _clientModel.FindById(clientId);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            // Récupérer la liste des articles disponibles
+            var articles = _articleModel.GetArticles();
+            ViewBag.Articles = articles;
+
+            ViewBag.Client = client;
             return View();
         }
-
-        // Action pour enregistrer un dette (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Dette dette)
+        public async Task<IActionResult> FormDette(int clientId, List<ArticleSelection> articleSelections)
         {
             if (ModelState.IsValid)
             {
-                await _detteModel.Create(dette);
-                return RedirectToAction(nameof(Index)); // Rediriger vers la liste des dettes après enregistrement
+                // Trouver le client associé
+                var client = await _clientModel.FindById(clientId);
+                if (client == null)
+                {
+                    return NotFound();
+                }
+
+                // Créer une nouvelle dette
+                var dette = new Dette
+                {
+                    ClientId = clientId,
+                    Details = new List<Detail>() // Initialisation de la liste des détails
+                };
+
+                // Ajouter chaque article sélectionné à la dette en créant des détails
+                foreach (var selection in articleSelections)
+                {
+                    var article = await _articleModel.FindById(selection.ArticleId); // Find the article
+                    if (article != null)
+                    {
+                        var detail = new Detail
+                        {
+                            ArticleId = selection.ArticleId,
+                            QteDette = selection.Quantity,
+                            Dette = dette // Link the detail to the debt
+                        };
+
+                        dette.Details.Add(detail); // Add the detail to the debt's details list
+                        dette.Montant += selection.Quantity * article.Prix; // Add to the total debt amount
+                    }
+                }
+
+
+                // Calculer le montant total de la dette
+
+                // Sauvegarder la dette et ses détails
+                await _detteModel.Create(clientId, dette);
+                TempData["Message"] = "Dette créée avec succès!";
+                return RedirectToAction("Index", "Client");
             }
-            return View(dette); // Retourner la vue avec le formulaire si la validation échoue
+
+            return View();
         }
 
-        // Action pour afficher le formulaire d'édition d'un dette
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> FormDette(int clientId, Dette dette, string selectedArticles)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         // Désérialiser les articles sélectionnés
+        //         var articles = JsonConverter.DeserializeObject<List<ArticleSelection>>(selectedArticles);
+
+        //         // Ajouter chaque article à la dette
+        //         foreach (var item in articles)
+        //         {
+        //             var article = await _articleModel.FindById(item.ArticleId);
+        //             if (article != null)
+        //             {
+        //                 // Logique pour associer l'article à la dette
+        //                 var detail = new Detail
+        //                 {
+        //                     ArticleId = item.ArticleId,
+        //                     QteDette = item.Quantity,
+        //                     DetteId = dette.Id
+        //                 };
+
+        //                 await _detailsModel.Create(detail); // Sauvegarde du détail
+        //             }
+        //         }
+
+        //         // Sauvegarder la dette elle-même
+        //         await _detteModel.Create(clientId, dette);
+        //         TempData["Message"] = "Dette créée avec succès!";
+        //         return RedirectToAction("Index", "Client");
+        //     }
+
+        //     return View(dette);
+        // }
+
+// Classe pour lier les articles et la quantité
+        public class ArticleSelection
+        {
+            public int ArticleId { get; set; }
+            public int Quantity { get; set; }
+        }
+
+        // Action pour éditer une dette
         public async Task<IActionResult> Edit(int id)
         {
             var dette = await _detteModel.FindById(id);
@@ -80,11 +170,10 @@ namespace GestionBoutiqueC.Controllers
             {
                 return NotFound();
             }
-
-            return View(dette); // Retourner la vue d'édition
+            return View(dette);
         }
 
-        // Action pour mettre à jour un dette (POST)
+        // Action pour mettre à jour une dette
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Dette dette)
@@ -97,12 +186,48 @@ namespace GestionBoutiqueC.Controllers
             if (ModelState.IsValid)
             {
                 await _detteModel.Update(dette);
-                return RedirectToAction(nameof(Index)); // Rediriger vers la liste des dettes après mise à jour
+                return RedirectToAction(nameof(Index));
             }
-            return View(dette); // Retourner la vue avec les informations de l'édition
+            return View(dette);
         }
 
-        // Action pour supprimer un dette
+        [HttpPost]
+        public async Task<IActionResult> Accepte(int detteId)
+        {
+            // Rechercher la dette par ID
+            var dette = await _detteModel.FindById(detteId);
+            if (dette == null)
+            {
+                return NotFound();
+            }
+
+            // Mettre à jour l'état de la dette à "acceptée"
+            dette.EtatDette = EtatDette.EnCours;
+            _detteModel.Update(dette);
+
+            // Rediriger ou retourner une vue
+            return RedirectToAction("Index"); // Remplacez "Index" par la page que vous souhaitez afficher.
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Refuse(int detteId)
+        {
+            // Rechercher la dette par ID
+            var dette = await _detteModel.FindById(detteId);
+            if (dette == null)
+            {
+                return NotFound();
+            }
+
+            // Mettre à jour l'état de la dette à "annulée"
+            dette.EtatDette = EtatDette.Anuler;
+            _detteModel.Update(dette);
+
+            // Rediriger ou retourner une vue
+            return RedirectToAction("Index"); // Remplacez "Index" par la page que vous souhaitez afficher.
+        }
+
+        // Action pour supprimer une dette
         public async Task<IActionResult> Delete(int id)
         {
             var dette = await _detteModel.FindById(id);
@@ -110,56 +235,30 @@ namespace GestionBoutiqueC.Controllers
             {
                 return NotFound();
             }
-
-            return View(dette); // Retourner la vue de confirmation de suppression
+            return View(dette);
         }
 
-        // Action pour supprimer un dette (POST)
+        // Action pour confirmer la suppression d'une dette
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _detteModel.Delete(id);
-            return RedirectToAction(nameof(Index)); // Rediriger vers la liste des dettes après suppression
-        }
-        [HttpGet]
-        [Route("Client/DetailsDette")]
-        public async Task<IActionResult> DetailsDette(int detteId)
-        {
-            // Récupérer la dette
-            var dette = await _detteModel.FindById(detteId);
-            if (dette == null)
-            {
-                // Dette introuvable
-                return NotFound(); // Vous pouvez personnaliser cette erreur
-            }
-
-            // Récupérer les détails liés à la dette
-            var details = await _detailsModel.FindArticleByDetteId(detteId);
-
-            if (details == null || !details.Any())
-            {
-                // Aucun détail trouvé pour cette dette
-                return View(new List<Detail>()); // Vue vide
-            }
-
-            // Passer les informations à la vue
-            ViewBag.Dette = dette; // Si nécessaire, transmettre l'objet complet de la dette
-            return View(details);
+            return RedirectToAction(nameof(Index));
         }
 
+        // Action pour afficher les paiements d'une dette
         public async Task<IActionResult> FormPaiement(int detteId)
         {
-            var dette = await _detteModel.FindById(detteId); // Récupère la dette
+            var dette = await _detteModel.FindById(detteId);
             if (dette == null)
             {
                 return NotFound();
             }
 
-            ViewBag.Dette = dette; // Passe les détails de la dette à la vue
+            ViewBag.Dette = dette;
             return View(new Paiement { DetteId = dette.Id });
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -173,34 +272,15 @@ namespace GestionBoutiqueC.Controllers
             }
 
             var detteToUpdate = await _detteModel.FindById(paiement.DetteId);
-            if (detteToUpdate == null)
+            if (detteToUpdate != null)
             {
-                return NotFound();
+                await _paiementModel.Create(paiement);
+                await _detteModel.Update(detteToUpdate);
+                TempData["Message"] = "Paiement enregistré avec succès!";
+                return RedirectToAction("Index", "Dette");
             }
 
-            // Validation du paiement
-            if (paiement.Montant <= 0 || paiement.Montant > detteToUpdate.MontantRestant)
-            {
-                ModelState.AddModelError("Montant", "Montant invalide.");
-                ViewBag.Dette = detteToUpdate;
-                return View(paiement);
-            }
-
-            // Enregistre le paiement
-            await _paiementModel.Create(paiement);
-
-            // Met à jour la dette
-            detteToUpdate.MontantVerse += paiement.Montant;
-            if (detteToUpdate.MontantVerse >= detteToUpdate.Montant)
-            {
-                detteToUpdate.TypeDette = Enums.TypeDette.Solde ; 
-            }
-            await _detteModel.Update(detteToUpdate);
-
-            TempData["Message"] = "Paiement effectué avec succès !";
-            return RedirectToAction(nameof(Index));
+            return View(paiement);
         }
-
-
     }
 }

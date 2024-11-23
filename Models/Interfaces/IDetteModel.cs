@@ -8,6 +8,6 @@ namespace GestionBoutiqueC.Models.Interfaces
     {
         IEnumerable<Dette> GetDettes();
         Task<List<Dette>> FindByClientId(int ClientId);
-
+         Task<Dette> Create(int clientId, Dette dette);
     }
 }

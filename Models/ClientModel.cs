@@ -75,7 +75,13 @@ namespace GestionBoutiqueC.Models
             return client;
         }
 
-    
+        public async Task<Client> FindBySurnomAndTelephone(string surnom, string telephone)
+        {
+            return await _context.Clients
+                         .FirstOrDefaultAsync(c => c.Surnom == surnom && c.Telephone == telephone);   
+        }
+
+
         // public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)
         // {
         //     var clients = _context.Clients.AsQueryable<Client>();

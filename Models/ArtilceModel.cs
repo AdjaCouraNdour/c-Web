@@ -18,7 +18,7 @@ namespace GestionBoutiqueC.Models
             _context = context;
         }
         
-        public IEnumerable<Article> GetArticles()
+        public  IEnumerable<Article> GetArticles()
         {
             return _context.Articles.ToList();
         }

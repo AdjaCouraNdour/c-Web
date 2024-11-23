@@ -8,6 +8,7 @@ namespace GestionBoutiqueC.Models.Interfaces
     {
         Task<Client> FindByTelephone(string telephone);
         IEnumerable<Client> GetClients();
-        Task<Client> Create(Client client);
+        Task<Client> FindBySurnomAndTelephone(string surnom, string telephone);
+        
     }
 }

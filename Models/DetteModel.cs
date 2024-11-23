@@ -68,12 +68,32 @@ namespace GestionBoutiqueC.Models
                 .ToListAsync();
         }
 
-        public async Task<Dette> Create(Dette dette)
+       public async Task<Dette> Create(int clientId, Dette dette)
         {
+            // Récupérer le client pour valider qu'il existe
+            var client = await _context.Clients.FindAsync(clientId);
+            if (client == null)
+            {
+                // Si le client n'existe pas, vous pouvez gérer l'erreur ici (par exemple, lever une exception ou retourner null)
+                throw new Exception("Client non trouvé.");
+            }
 
+            // Associer la dette au client
+            dette.ClientId = clientId;
+            dette.Client = client; // Si la relation entre Dette et Client est définie
+
+            // Ajouter la dette au contexte
             _context.Dettes.Add(dette);
+
+            // Sauvegarder les modifications dans la base de données
             await _context.SaveChangesAsync();
-            return dette;
+
+            return dette; // Retourner la dette créée
+        }
+
+        public Task<Dette> Create(Dette data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

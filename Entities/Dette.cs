@@ -24,7 +24,7 @@ namespace GestionBoutiqueC.Entities
         public TypeDette TypeDette { get; set ; }
         public EtatDette EtatDette { get; set ; }
     
-        public virtual ICollection<Detail> Details { get;} = new List<Detail>();
+        public virtual ICollection<Detail> Details { get;set;} = new List<Detail>();
         public virtual ICollection<Paiement> Paiements { get;} = new List<Paiement>();
 
     }
