@@ -67,5 +67,10 @@ namespace GestionBoutiqueC.Models
             await _context.SaveChangesAsync();
             return data;
         }
+
+        public async Task<IEnumerable<Paiement>> GetPaiementsDette(int Id)
+        {
+            return await _context.Paiements.Where(p => p.DetteId == Id).ToListAsync();
+        }
     }
 }

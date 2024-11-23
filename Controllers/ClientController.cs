@@ -53,8 +53,12 @@ namespace GestionBoutiqueC.Controllers
             if (ModelState.IsValid)
             {
                 var clientAdded = await _clientModel.Create(client);
-                TempData["Message"] = "Client créé avec succès!";
-                return RedirectToAction(nameof(Index));
+                if (clientAdded != null)
+                {
+                    TempData["Message"] = "Client créé avec succès!";
+                    return RedirectToAction(nameof(Index));  
+                }
+              
             }
             return View(client);
         }

@@ -16,9 +16,6 @@ module.exports = {
           500:'#505050'
         },
         burgundy: '#4A0013', // couleur personnalisée pour 'bg-burgundy'
-        red:{
-          500:'#4A0013'
-        }
       },
     },
   },

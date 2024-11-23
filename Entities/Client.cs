@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using GestionBoutiqueC;
+using GestionBoutiqueC.Validator;
 
 namespace GestionBoutiqueC.Entities
 {
@@ -16,6 +17,7 @@ namespace GestionBoutiqueC.Entities
        
         [Required(ErrorMessage = "Le surnom est obligatoire")]
         [StringLength(20, ErrorMessage = "Le surnom doit avoir au maximum 20 caractères")]
+        [UniqueSurnom(ErrorMessage = "Le surnom est deja utulisé")]
         public string Surnom { get; set; }
 
         [Required(ErrorMessage = "Le telephone est obligatoire")]
@@ -25,7 +27,7 @@ namespace GestionBoutiqueC.Entities
         public string Address { get; set; }
         public User? User { get; set; }
 
-        public virtual ICollection<Dette> Dettes { get;} = new List<Dette>();
+        public virtual ICollection<Dette>? Dettes { get;} = new List<Dette>();
 
     }
 }

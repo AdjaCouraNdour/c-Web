@@ -41,6 +41,17 @@ namespace GestionBoutiqueC.Controllers
 
             return View(dettesPaginated);
         }
+    //     public IActionResult Index(int page = 1, int limit = 10)
+    // {
+    //     var dettes = _context.Dettes.Skip((page - 1) * limit).Take(limit).ToList();
+    //     var totalCount = _context.Dettes.Count();
+
+    //     ViewBag.Page = page;
+    //     ViewBag.TotalPages = (int)Math.Ceiling((double)totalCount / limit);
+    //     ViewBag.Limit = limit;
+
+    //     return View(dettes);
+    // }
 
         // Action pour afficher les détails d'une dette
         public async Task<IActionResult> Details(int id)

@@ -57,9 +57,13 @@
                                 <a href="@Url.Action("DetailsDette", "Client", new { detteId = dette.Id })" class="bg-burgundy text-white text-sm px-4 rounded-lg hover:bg-red-700">
                                     Details
                                 </a>
-                                 <a href="@Url.Action("FormPaiement", "Dette", new { detteId = dette.Id })" class="bg-burgundy text-white text-sm px-4 rounded-lg hover:bg-red-700">
-                                    Payer 
+                                <a class="bg-burgundy text-white text-sm px-4 rounded-lg hover:bg-red-700" 
+                                    asp-controller="Paiement" 
+                                    asp-action="PaiementsDette" 
+                                    asp-route-id="@dette.Id">
+                                        Paiement
                                 </a>
+
                         </td>
                     </tr>
                 }

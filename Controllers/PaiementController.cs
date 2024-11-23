@@ -8,18 +8,22 @@ namespace GestionBoutiqueC.Controllers
     public class PaiementController : Controller
     {
         private readonly IPaiementModel _paiementModel;
+        private readonly IDetteModel _detteModel;
+
         
+        // Injecter le modèle paiement (le service paiementModel)
+        public PaiementController(IPaiementModel paiementModel,IDetteModel detteModel)
+        {
+            _paiementModel = paiementModel;
+            _detteModel = detteModel;
+
+        }
+
         public IActionResult Index()
         {
             var paiements = _paiementModel.GetPaiements();
             return View(paiements);
         }
-        // Injecter le modèle paiement (le service paiementModel)
-        public PaiementController(IPaiementModel paiementModel)
-        {
-            _paiementModel = paiementModel;
-        }
-       
         // Action pour afficher les détails d'un paiement par son ID
         public async Task<IActionResult> Details(int id)
         {
@@ -102,6 +106,14 @@ namespace GestionBoutiqueC.Controllers
             return RedirectToAction(nameof(Index)); // Rediriger vers la liste des paiements après suppression
         }
 
+    
+        public async Task<IActionResult> PaiementsDette(int Id)
+        {
+             var paiementsDette = await _paiementModel.GetPaiementsDette(Id);         
+
+            return View(paiementsDette);
+        }
+       
 
     }
 }
