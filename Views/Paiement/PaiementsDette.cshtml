@@ -1,45 +1,72 @@
 ﻿@model IEnumerable<GestionBoutiqueC.Entities.Paiement>
 
 @{
-    ViewData["Title"] = "Liste des Paiement";
+    ViewData["Title"] = "Liste des Paiements";
 }
 
-
 <div class="container mx-auto mt-6">
-    <table class="min-w-full bg-white mb-4  border border-gray-300 rounded-lg">
+    <label for="montantPayerTotal" class="text-gray-700 font-semibold">Montant à payer :</label>
+    <div class="mb-4 flex items-center space-x-4">
+    <input type="number" id="montantPayerTotal" class="px-4 py-2 border border-gray-300 rounded-md flex-1" placeholder="Entrez le montant à payer" min="0" step="0.01" />
+    <button class="px-4 py-2 bg-burgundy text-white font-semibold rounded-lg hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        Payer
+    </button>
+</div>
+
+    
+    <table class="min-w-full bg-white mb-4 border border-gray-300 rounded-lg">
         <thead>
             <tr class="bg-burgundy">
                 <th class="py-2 px-4 border-b text-white text-left">Date</th>
                 <th class="py-2 px-4 border-b text-white text-left">Montant</th>
                 <th class="py-2 px-4 border-b text-white text-left">Id de la dette</th>
-
+                <th class="py-2 px-4 border-b text-white text-left">Montant à payer</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var paiement in Model)
             {
+                // Récupérer la dette associée à chaque paiement (par exemple via une relation ou une méthode)
+                var dette = paiement.Dette; // Assurez-vous que l'objet 'Dette' est bien chargé ici
+                var montantRestant = dette?.MontantRestant ?? 0; // Si dette est null, on considère un montant restant à 0
+
                 <tr class="bg-nude hover:bg-gray-100">
                     <td class="py-2 px-4 border-b">@paiement.Date</td>
                     <td class="py-2 px-4 border-b">@paiement.Montant</td>
                     <td class="py-2 px-4 border-b">@paiement.DetteId</td>
 
+                    <!-- Champ pour entrer le montant à payer et bouton payer -->
+                    <td class="py-2 px-4 border-b">
+                        @if (montantRestant > 0)
+                        {
+                            <input type="number" id="montantPayer_@paiement.DetteId" class="py-2 px-4 border rounded-md" placeholder="Montant à payer" min="0" max="@montantRestant" />
+                            <button class="px-6 py-2 ml-2 bg-burgundy text-white font-semibold rounded-lg hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                    onclick="payer(@paiement.DetteId, @montantRestant)">
+                                Payer
+                            </button>
+                        }
+                        else
+                        {
+                            <span class="text-gray-500">Aucun montant restant</span>
+                        }
+                    </td>
                 </tr>
             }
+
             @if (!Model.Any())
             {
                 <tr>
-                    <td colspan="4" class="py-2 px-4 text-center">Aucun paiement effectue pour cette dette</td>
+                    <td colspan="4" class="py-2 px-4 text-center">Aucun paiement effectué pour cette dette</td>
                 </tr>
             }
         </tbody>
     </table>
-      <!-- Pagination -->
+
+    <!-- Pagination -->
     <div class="flex justify-between items-center py-4">
-        <span class="text-sm text-gray-700">
-        .
-        </span>
+        <span class="text-sm text-gray-700">.</span>
         <div class="flex space-x-2">
-             @if (ViewBag.Page >= 1)
+            @if (ViewBag.Page >= 1)
             {
                 <a href="@Url.Action("Index", new { page = ViewBag.Page - 1, limit = ViewBag.limit })" 
                    class="px-3 py-1 border bg-burgundy border-gray-300 text-white rounded-md hover:bg-gray-100">
@@ -67,3 +94,39 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+
+    <script>
+        function payerMontantTotal() {
+            var montantTotal = document.getElementById("montantPayerTotal").value;
+            
+            // Vérifier si le montant à payer est valide
+            if (montantTotal <= 0) {
+                alert("Veuillez entrer un montant valide.");
+                return;
+            }
+            
+            // Vous pouvez envoyer ce montant au serveur ici pour traiter le paiement (par exemple via AJAX)
+            alert("Paiement total de " + montantTotal + " € effectué.");
+        }
+
+        function payer(detteId, montantRestant) {
+            var montantPayer = document.getElementById("montantPayer_" + detteId).value;
+            
+            // Vérifier si le montant à payer est valide
+            if (montantPayer <= 0) {
+                alert("Veuillez entrer un montant valide.");
+                return;
+            }
+            
+            if (montantPayer > montantRestant) {
+                alert("Le montant à payer ne peut pas dépasser le montant restant.");
+                return;
+            }
+
+            // Si les vérifications sont passées, effectuer le paiement (par exemple, via un appel AJAX ou redirection)
+            alert("Paiement effectué de " + montantPayer + " € pour la dette " + detteId);
+        }
+    </script>
+}
