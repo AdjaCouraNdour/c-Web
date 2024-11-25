@@ -46,10 +46,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNEZXR0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Client/DetteClient.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldHRlQ2xpZW50LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Client/FormClient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEZvcm1DbGllbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -66,12 +62,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRGV0YWlsc0RldHRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/FormDette.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRm9ybURldHRlLmNzaHRtbA==
+[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/DettesClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRGV0dGVzQ2xpZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/FormPaiement.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRm9ybVBhaWVtZW50LmNzaHRtbA==
+[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/FormDette.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0dGVcRm9ybURldHRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Dette/Index.cshtml]
@@ -84,6 +80,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Paiement/FormPaiement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFpZW1lbnRcRm9ybVBhaWVtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/KIKI/Documents/ISM L3/C\#/GestionBoutiqueWeb/Views/Paiement/Index.cshtml]

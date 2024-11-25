@@ -1,5 +1,6 @@
-﻿@model IEnumerable<GestionBoutiqueC.Entities.Paiement>
-
+﻿@using GestionBoutiqueC.Core
+@using GestionBoutiqueC.Entities
+@model PaginationModel<Paiement>
 @{
     ViewData["Title"] = "Liste des Paiement";
 }
@@ -17,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var paiement in Model)
+            @foreach (var paiement in Model.Items)
             {
                 <tr class="bg-nude hover:bg-gray-100">
                     <td class="py-2 px-4 border-b">@paiement.Date</td>
@@ -27,7 +28,7 @@
 
                 </tr>
             }
-            @if (!Model.Any())
+            @if (!Model.Items.Any())
             {
                 <tr>
                     <td colspan="4" class="py-2 px-4 text-center">Aucun paiement ce client.</td>
@@ -36,36 +37,41 @@
         </tbody>
     </table>
       <!-- Pagination -->
-    <div class="flex justify-between items-center py-4">
-        <span class="text-sm text-gray-700">
-        .
-        </span>
-        <div class="flex space-x-2">
-             @if (ViewBag.Page >= 1)
-            {
-                <a href="@Url.Action("Index", new { page = ViewBag.Page - 1, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border bg-burgundy border-gray-300 text-white rounded-md hover:bg-gray-100">
-                    &lt; &lt;
-                </a>
-            }
-
-            @for (int i = 1; i <= ViewBag.TotalPages; i++)
-            {
-                <a href="@Url.Action("Index", new { page = i, limit = ViewBag.limit })" 
-                   class="px-4 py-1 border 
-                          @(i == ViewBag.Page ? "bg-white text-burgundy" : "border-gray-300 text-gray-700 hover:bg-gray-100") 
-                          rounded-md">
-                    @i
-                </a>
-            }
-
-            @if (ViewBag.Page <= ViewBag.TotalPages)
-            {
-                <a href="@Url.Action("Index", new { page = ViewBag.Page + 1, limit = ViewBag.limit })" 
-                   class="px-3 py-1 border bg-burgundy border-gray-300 text-white rounded-md hover:bg-gray-100">
-                  &gt;>
-                </a>
-            }
-        </div>
+    <div class="flex justify-end mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="flex list-none space-x-2">
+                @if (Model.HasPreviousPage)
+                {
+                    <li>
+                        <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })"
+                        class="px-4 py-2 border bg-burgundy text-white rounded-lg hover:bg-red-700">
+                            &laquo; 
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li>
+                        <a href="@Url.Action("Index", new { page = i })"
+                        class="px-4 py-2 border rounded-lg 
+                        @(i == Model.CurrentPage 
+                            ? "bg-red-700 text-white border-red-700 hover:bg-red-800" 
+                            : "bg-white text-burgundy border-burgundy hover:bg-gray-100")">
+                            @i
+                        </a>
+                    </li>
+                }
+                @if (Model.HasNextPage)
+                {
+                    <li>
+                        <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })"
+                        class="px-4 py-2 border bg-burgundy text-white rounded-lg hover:bg-red-700">
+                            &raquo;
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
     </div>
+
 </div>

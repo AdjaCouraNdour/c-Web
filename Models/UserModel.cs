@@ -1,3 +1,4 @@
+using GestionBoutiqueC.Core;
 using GestionBoutiqueC.Data;
 using GestionBoutiqueC.Entities;
 using GestionBoutiqueC.Models.Interfaces;
@@ -77,5 +78,12 @@ namespace GestionBoutiqueC.Models
             await _context.SaveChangesAsync();
             return data;
         }
+        public async Task<PaginationModel<User>> GetUsersByPaginate(int page, int pageSize)
+        {
+            var users = _context.Users.AsQueryable<User>();
+            return await PaginationModel<User>.Paginate(users, pageSize, page);
+
+        }
+    
     }
 }

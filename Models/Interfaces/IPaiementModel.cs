@@ -8,5 +8,7 @@ namespace GestionBoutiqueC.Models.Interfaces
     {
         IEnumerable<Paiement> GetPaiements();   
         Task<IEnumerable<Paiement>> GetPaiementsDette(int Id);
+        Task<PaginationModel<Paiement>> GetPaiementsByPaginate(int page, int pageSize);
+
  }
 }

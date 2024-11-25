@@ -9,5 +9,7 @@ namespace GestionBoutiqueC.Models.Interfaces
         Task<User> FindByLogin(string telephone);
         Task<User> FindByEmail(string telephone);
         IEnumerable<User> GetUsers();
+        Task<PaginationModel<User>> GetUsersByPaginate(int page, int pageSize);
+
     }
 }

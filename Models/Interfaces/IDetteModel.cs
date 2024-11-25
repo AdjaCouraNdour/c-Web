@@ -9,5 +9,7 @@ namespace GestionBoutiqueC.Models.Interfaces
         IEnumerable<Dette> GetDettes();
         Task<List<Dette>> FindByClientId(int ClientId);
         Task<Dette> Create(int clientId, Dette dette);
+        Task<PaginationDetteModel> GetDettesClientByPaginate(int clientId, int page, int pageSize);
+
     }
 }

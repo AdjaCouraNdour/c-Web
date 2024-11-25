@@ -12,6 +12,7 @@ namespace GestionBoutiqueC.Data
         public DbSet<Dette> Dettes { get; set; }
         public DbSet<Detail> Details { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<ArticleDette> ArticlesDette { get; set; }
         public DbSet<Paiement> Paiements { get; set; }
 
         // Autres DbSet pour d'autres entités
@@ -62,6 +63,23 @@ namespace GestionBoutiqueC.Data
                 .HasForeignKey(de => de.ArticleId) 
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<ArticleDette>()
+                .HasKey(e => new {
+                    e.ArticleId,
+                    e.DetteId
+                });
+
+            modelBuilder.Entity<ArticleDette>()
+                .HasOne(ad => ad.Article)
+                .WithMany(a => a.ArticlesDette)
+                // Associer la clé étrangère à la colonne DetteId dans la table ArticleDettes
+                .HasForeignKey(ad => ad.ArticleId);  // Associer la clé étrangère à la colonne ArticleId dans la table ArticleDettes
+
+            modelBuilder.Entity<ArticleDette>()
+                .HasOne(ad => ad.Dette)
+                .WithMany(a => a.ArticlesDette)
+                .HasForeignKey(ad => ad.DetteId);
+
             // Ajout des fixtures
             modelBuilder.Entity<Client>().HasData(ClientFixture.GetClients().ToArray());
             modelBuilder.Entity<User>().HasData(UserFixture.GetUsers().ToArray());
@@ -69,6 +87,7 @@ namespace GestionBoutiqueC.Data
             modelBuilder.Entity<Detail>().HasData(DetailFixture.GetDetails().ToArray());
             modelBuilder.Entity<Article>().HasData(ArticleFixture.GetArticles().ToArray());
             modelBuilder.Entity<Paiement>().HasData(PaiementFixture.GetPaiements().ToArray());
+            modelBuilder.Entity<ArticleDette>().HasData(ArticleDetteFixture.GetArticlesDette().ToArray());
 
             base.OnModelCreating(modelBuilder);
         }

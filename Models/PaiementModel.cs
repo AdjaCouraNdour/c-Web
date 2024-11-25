@@ -1,3 +1,4 @@
+using GestionBoutiqueC.Core;
 using GestionBoutiqueC.Data;
 using GestionBoutiqueC.Entities;
 using GestionBoutiqueC.Models.Interfaces;
@@ -72,5 +73,12 @@ namespace GestionBoutiqueC.Models
         {
             return await _context.Paiements.Where(p => p.DetteId == Id).ToListAsync();
         }
+        public async Task<PaginationModel<Paiement>> GetPaiementsByPaginate(int page, int pageSize)
+        {
+            var paiements = _context.Paiements.AsQueryable<Paiement>();
+            return await PaginationModel<Paiement>.Paginate(paiements, pageSize, page);
+
+        }
+    
     }
 }

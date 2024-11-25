@@ -15,25 +15,12 @@ namespace GestionBoutiqueC.Controllers
         {
             _userModel = userModel;
         }
-         public IActionResult Index(int page = 1, int limit = 3)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
-            // Récupérer tous les users
-            var users = _userModel.GetUsers()
-                          .OrderBy(c => c.Id) // Optionnel : tri par nom
-                          .Skip((page - 1) * limit) // Ignorer les éléments des pages précédentes
-                          .Take(limit) // Prendre uniquement les éléments pour la page courante
-                          .ToList();
-
-            // Calcul pour la pagination
-            int totalUsers = users.Count();
-            var usersPaginated = users.Skip((page - 1) * limit).Take(limit).ToList();
-
-            // Passer les données nécessaires à la vue
-            ViewBag.Page = page;
-            ViewBag.limit = limit;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalUsers / limit);
-
-            return View(usersPaginated);
+            // Fetch users from the service
+            var users = await _userModel.GetUsersByPaginate(page, pageSize);
+            // Pass the users to the view
+            return View(users);
         }
 
          [HttpGet]

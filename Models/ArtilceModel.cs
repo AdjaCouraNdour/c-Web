@@ -75,5 +75,12 @@ namespace GestionBoutiqueC.Models
             await _context.SaveChangesAsync();
             return data;
         }
+        public async Task<PaginationModel<Article>> GetArticlesByPaginate(int page, int pageSize)
+        {
+            var articles = _context.Articles.AsQueryable<Article>();
+            return await PaginationModel<Article>.Paginate(articles, pageSize, page);
+
+        }
+    
     }
 }

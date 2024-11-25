@@ -9,5 +9,7 @@ namespace GestionBoutiqueC.Models.Interfaces
     {
         Task<Article> FindByEtat(EtatArticle etat);
         IEnumerable<Article> GetArticles();
+        Task<PaginationModel<Article>> GetArticlesByPaginate(int page, int pageSize);
+
     }
 }

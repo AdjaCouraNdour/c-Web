@@ -19,25 +19,13 @@ namespace GestionBoutiqueC.Controllers
             _detteModel = detteModel;
         }
 
-        // Action pour afficher la liste des clients avec pagination
-        public IActionResult Index(int page = 1, int limit = 3)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
-            var clients = _clientModel.GetClients()
-                          .OrderBy(c => c.Id)
-                          .Skip((page - 1) * limit)
-                          .Take(limit)
-                          .ToList();
-
-            int totalClients = clients.Count();
-            var clientsPaginated = clients.Skip((page - 1) * limit).Take(limit).ToList();
-
-            ViewBag.Page = page;
-            ViewBag.limit = limit;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalClients / limit);
-
-            return View(clientsPaginated);
+            // Fetch clients from the service
+            var clients = await _clientModel.GetClientsByPaginate(page, pageSize);
+            // Pass the clients to the view
+            return View(clients);
         }
-
         // Action pour afficher le formulaire de création d'un client
         [HttpGet]
         public IActionResult FormClient()
@@ -116,26 +104,6 @@ namespace GestionBoutiqueC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-        // Action pour afficher les dettes d'un client
-        public async Task<IActionResult> DetteClient(int client)
-        {
-            var clientt = await _clientModel.FindById(client);
-            if (clientt == null)
-            {
-                return NotFound();
-            }
-
-            var dettes = await _detteModel.FindByClientId(client);
-
-            ViewBag.Client = clientt;
-            if (dettes == null || !dettes.Any())
-            {
-                dettes = new List<Dette>();
-            }
-
-            return View(dettes);
-        }
         [HttpGet]
         public IActionResult FormClientVal()
         {

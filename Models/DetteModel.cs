@@ -1,3 +1,4 @@
+using GestionBoutiqueC.Core;
 using GestionBoutiqueC.Data;
 using GestionBoutiqueC.Entities;
 using GestionBoutiqueC.Models.Interfaces;
@@ -94,6 +95,12 @@ namespace GestionBoutiqueC.Models
         public Task<Dette> Create(Dette data)
         {
             throw new NotImplementedException();
+        }
+         public async Task<PaginationDetteModel> GetDettesClientByPaginate(int clientId, int page, int pageSize)
+        {
+            var dettes = _context.Dettes.Where(dette => dette.ClientId == clientId).AsQueryable<Dette>();
+            var client = await _context.Clients.SingleAsync<Client>(client => client.Id == clientId)!;
+            return await PaginationDetteModel.PaginateDette(dettes, pageSize, page, client);
         }
     }
 }

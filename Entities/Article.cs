@@ -31,6 +31,8 @@ namespace GestionBoutiqueC.Entities
 
         public EtatArticle EtatArticle { get ; set ; }
         public virtual ICollection<Detail> Details { get;} = new List<Detail>();
+        public virtual ICollection<ArticleDette> ArticlesDette { get;} = new List<ArticleDette>();
+
 
     }
 }

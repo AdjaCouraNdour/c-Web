@@ -82,11 +82,11 @@ namespace GestionBoutiqueC.Models
         }
 
 
-        // public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)
-        // {
-        //     var clients = _context.Clients.AsQueryable<Client>();
-        //     return await PaginationModel<Client>.Paginate(clients, pageSize, page);
+    public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)
+        {
+            var clients = _context.Clients.AsQueryable<Client>();
+            return await PaginationModel<Client>.Paginate(clients, pageSize, page);
 
-        // }
+        }
     }
 }

@@ -19,9 +19,11 @@ namespace GestionBoutiqueC.Controllers
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
-            var paiements = _paiementModel.GetPaiements();
+            // Fetch paiements from the service
+            var paiements = await _paiementModel.GetPaiementsByPaginate(page, pageSize);
+            // Pass the paiements to the view
             return View(paiements);
         }
         // Action pour afficher les détails d'un paiement par son ID
@@ -105,7 +107,42 @@ namespace GestionBoutiqueC.Controllers
 
             return View(paiementsDette);
         }
-       
+
+         // Action pour afficher les paiements d'une dette
+        public async Task<IActionResult> FormPaiement(int detteId)
+        {
+            var dette = await _detteModel.FindById(detteId);
+            if (dette == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Dette = dette;
+            return View(new Paiement { DetteId = dette.Id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FormPaiement([Bind("Montant, DetteId")] Paiement paiement)
+        {
+            if (!ModelState.IsValid)
+            {
+                var dette = await _detteModel.FindById(paiement.DetteId);
+                ViewBag.Dette = dette;
+                return View(paiement);
+            }
+
+            var detteToUpdate = await _detteModel.FindById(paiement.DetteId);
+            if (detteToUpdate != null)
+            {
+                await _paiementModel.Create(paiement);
+                await _detteModel.Update(detteToUpdate);
+                TempData["Message"] = "Paiement enregistré avec succès!";
+                return RedirectToAction("DettesClient", "Dette");
+            }
+
+            return View(paiement);
+        }
 
     }
 }

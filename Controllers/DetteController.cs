@@ -41,18 +41,11 @@ namespace GestionBoutiqueC.Controllers
 
             return View(dettesPaginated);
         }
-    //     public IActionResult Index(int page = 1, int limit = 10)
-    // {
-    //     var dettes = _context.Dettes.Skip((page - 1) * limit).Take(limit).ToList();
-    //     var totalCount = _context.Dettes.Count();
-
-    //     ViewBag.Page = page;
-    //     ViewBag.TotalPages = (int)Math.Ceiling((double)totalCount / limit);
-    //     ViewBag.Limit = limit;
-
-    //     return View(dettes);
-    // }
-
+        public async Task<IActionResult> DettesClient(int clientId, int page = 1, int pageSize = 3)
+        {
+            var dettes = await _detteModel.GetDettesClientByPaginate(clientId, page, pageSize);
+            return View(dettes);
+        }
         // Action pour afficher les détails d'une dette
         public async Task<IActionResult> Details(int id)
         {
@@ -258,40 +251,6 @@ namespace GestionBoutiqueC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Action pour afficher les paiements d'une dette
-        public async Task<IActionResult> FormPaiement(int detteId)
-        {
-            var dette = await _detteModel.FindById(detteId);
-            if (dette == null)
-            {
-                return NotFound();
-            }
-
-            ViewBag.Dette = dette;
-            return View(new Paiement { DetteId = dette.Id });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FormPaiement([Bind("Montant, DetteId")] Paiement paiement)
-        {
-            if (!ModelState.IsValid)
-            {
-                var dette = await _detteModel.FindById(paiement.DetteId);
-                ViewBag.Dette = dette;
-                return View(paiement);
-            }
-
-            var detteToUpdate = await _detteModel.FindById(paiement.DetteId);
-            if (detteToUpdate != null)
-            {
-                await _paiementModel.Create(paiement);
-                await _detteModel.Update(detteToUpdate);
-                TempData["Message"] = "Paiement enregistré avec succès!";
-                return RedirectToAction("Index", "Dette");
-            }
-
-            return View(paiement);
-        }
+      
     }
 }

@@ -20,12 +20,17 @@ namespace GestionBoutiqueC.Entities
             CreateAt = DateTime.Now;
             UpdateAt = DateTime.Now;
         }
-        
-        public TypeDette TypeDette { get; set ; }
+        public TypeDette TypeDette { get {
+            return MontantVerse >= Montant ? TypeDette.Solde : TypeDette.nonSolde;
+            }
+        }
+        // public TypeDette TypeDette { get; set ; }
         public EtatDette EtatDette { get; set ; }
     
         public virtual ICollection<Detail> Details { get;set;} = new List<Detail>();
         public virtual ICollection<Paiement> Paiements { get;} = new List<Paiement>();
+        public virtual ICollection<ArticleDette> ArticlesDette { get;} = new List<ArticleDette>();
+
 
     }
 }
